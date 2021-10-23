@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team work</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" id="stylesheet" href="css/mystyle.css">
+    <link rel="stylesheet" href="css/error.css">
+    <link rel="apple-touch-icon" sizes="32x32" href="logo-img/favicon-32x32.ico">
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <link rel="shortcut icon" href="logo-img/favicon-32x32.ico">
+    <link rel="icon" type="image/jpg" href="./logo-img/teamworklogo.jpg">
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.0/dist/bouncer.polyfills.min.js"></script>
+    <script src="main.js" type="text/javascript" defer></script>
+</head>
+
+
+
+<body onload=hide_main_app();onloadtheme()>
+    <!---ERROR and LOADING BOX-->
+
+    <div class="notification mb-0" id="alertbox" onclick="hideAlert()" hidden>
+        <button class="delete" id="alertclose">
+        </button>
+        <div id="alertmsg">
+            ERRO MSG
+        </div>
+    </div>
+    <div class="hidden" id="loader">
+        <div class="is-flex is-justify-content-center is-flex-direction-column-reverse">
+            <progress class="progress is-large is-link" max="100">20%</progress>
+            <p class="has-text-centered is-size-4">Hang tight we are loading</p>
+        </div>
+    </div>
+    <div class="hidden" id="loader-theme">
+        <div class="loader">
+        </div>
+    </div>
+    <header class=" header" id="TeamWork_APP_login">
+        <div class="hero is-fullheight">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="block">
+                        <img alt="company-logo" src="logo-img/logo.svg">
+                        <h2 class="my-6 has-text-centered has-text-white is-size-4 ">Team work makes the dream work
+                        </h2>
+                    </div>
+                    <div class="columns is-centered" id="login_box">
+                        <div class="column is-4">
+                            <div class="box border">
+                                <form method="POST" id="login_form" onSubmit=login(event)
+                                    action="http://localhost:8888/api/api.php?action=login">
+                                    <div class="field">
+                                        <label>Email</label>
+                                        <div class="control has-icons-left has-icons-right">
+                                            <input class="input is-link" type="email" name="email" required>
+                                            <span class="icon is-small is-left">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                        </div>
+                                        <label>Password</label>
+                                        <div class="control has-icons-left has-icons-right">
+                                            <input pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$"
+                                                class="input is-link" type="password" name="pword" required>
+                                            <span class="icon is-small is-left">
+                                                <i class="fas fa-unlock-alt"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="is-flex is-justify-content-space-between p-3">
+                                    <button type="submit" form="login_form"
+                                        class=" has-text-white button m-1 is-rounded is-link"
+                                        name="submit">Login</button>
+                                    <a id="reg_show" class=" has-text-white button m-1 is-rounded is-danger">
+                                        Register</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Register FORM-->
+                    <div class="hidden" id="register_form">
+                        <div class="box">
+                            <h2 class="has-text-link has-text-centered is-size-4">Let's get it
+                                grooving</h2>
+                            <form method="POST" onsubmit="register(event)"
+                                action="http://localhost:8888/api/api.php?action=register" id="register">
+                                <div class="field">
+                                    <label>First Name</label>
+                                    <input type="text" class="input is-link" name="firstName" required
+                                        pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+">
+                                    <label>Last Name</label>
+                                    <input type="text" class="input is-link" name="lastName" required
+                                        pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+">
+                                    <label>Email</label>
+                                    <div class="control has-icons-left has-icons-right">
+                                        <input class="input is-link" type="email" placeholder="john@example.com"
+                                            name="email" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <span class="icon is-small is-right">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                    </div>
+                                    <label>Phone Number:</label>
+                                    <!-- Phone number be in 555-555-5555 format -->
+                                    <input type="text" id="tel" class="input is-link" name="phone_number"
+                                        pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
+                                        data-bouncer-message="Please use only Australian domestic numbers" required>
+                                    <label>Clock On Number</label>
+                                    <input type="number"
+                                        data-bouncer-message="Clock number needs to be 4 digits in length"
+                                        class="input is-link" name="clockInNum" required>
+                                    <label> Password</label>
+                                    <input type="password" class="input is-link" name="pword" required
+                                        data-bouncer-message="Password must contain a min of 6 characters long with one upper case chartcter and at least one digit"
+                                        pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$">
+                                    <label class="py-2">Date of birth:</label>
+                                    <input class="py-2 input is-link" type="date" name="DOB" value="2018-07-22"
+                                        min="1970-01-01" max="2021-12-31"
+                                        data-bouncer-message="Valid date range is from 1960 till current" required>
+                                    <div class="is-flex is-flex-direction-column">
+                                        <label for="department">Department:</label>
+                                        <select id="department" name="department" form="register" required>
+                                            <option disabled selected value> -- select a department -- </option>
+                                            <option value="Front_Counter">Front Counter</option>
+                                            <option value="Fresh_Produce">Fresh Produce</option>
+                                            <option value="Bakery">Bakery</option>
+                                            <option value="Deli">Deli</option>
+                                        </select>
+                                    </div>
+                                    <div class="is-flex is-flex-direction-column">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="is-flex is-justify-content-space-between p-3">
+                                <button onclick="back_to_login_btn()"
+                                    class="has-text-white button m-1 is-rounded is-link">Back</button>
+                                <button type="submit" form="register"
+                                    class=" has-text-white button m-1 is-rounded is-danger"
+                                    name="submit">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="TeamWork_APP_logged_in">
+        <div>
+            <nav class="navbar main is-family-primary" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item">
+                        <img src="logo-img/logo.svg" alt="logo" height="150" width="150">
+                    </a>
+
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                        data-target="navbarBasicExample">
+                        <span class="bar" aria-hidden="true"></span>
+                        <span class="bar" aria-hidden="true"></span>
+                        <span class="bar" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div id="navbarBasicExample" class="pl-1 navbar-menu">
+                    <div class="navbar-start ">
+                        <a class="navbar-item is-size-5" onclick="toggleVisibility('menu1')" id="menu1-btn"><i
+                                class="fas fa-user-clock symbol"></i>
+                            Availabilities
+                        </a>
+
+                        <a class="navbar-item is-size-5" onclick="toggleVisibility('menu2')" id="menu2-btn">
+                            <i class="fas fa-history symbol"></i>Live Clock
+                        </a>
+                        <a class="navbar-item is-size-5" onclick="toggleVisibility('menu3')" id="menu3-btn"><i
+                                class="fas fa-user symbol"></i>My Details
+                        </a>
+                        <a class="navbar-item is-size-5" onclick="toggleVisibility('menu4')" id="menu4-btn">
+                            <i class="far fa-calendar-alt symbol">
+                            </i>
+                            Schedule
+                        </a>
+                        <a class="navbar-item is-size-5" onclick="toggleVisibility('menu5')" id="menu5-btn">
+                            <i class="fas fa-users symbol"></i>
+                            Admin
+                        </a>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <form method="GET" id="logOut" onsubmit="logOut()">
+                                    <button class="button is-link" type="submit" form="logOut" value="submit">Log
+                                        Out</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!--Availabilities-->
+        <section>
+            <div id="menu1" class="page has-text-white has-text-centered">
+                <div class="py-2 border-top"></div>
+                Availabilities
+                <div class="container px-3" id="hello">
+                    <div class="py-3"></div>
+                    <div id="ShowInsertguy">
+                        <button class="button is-link" type="button" onclick="checkMyAvailabilities()">Check My
+                            Availabilities</button>
+                        <div class="box py-3 mt-2">
+                            <p>Welcome to your first time</p>
+                            <p>Please create availabilities by selecting yes or no for the days you can work</p>
+                            <p> Don't forget to press submit down the bottom when done</p>
+                        </div>
+
+                        <!---INSERT AVAIL FORM LOADED IS NO RESULSTS IN DB-->
+
+
+                        <form id="setMy_AvailForm" action="http://localhost:8888/api/api.php?action=insertMy_Avail"
+                            method="POST" onsubmit="setMy_Avail(event)"
+                            class="pt-3 pb-5 is-flex is-flex-direction-column">
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Monday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button monday-btn" id='Monday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button monday-btn" id='Monday_btn2'>No I can't work
+                                    </div>
+                                    <input hidden type="text" name="Monday" id="Monday_input"
+                                        data-bouncer-message="Please tell us yes or no for this day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Tuesday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='Tuesday_btn1'>Yes I can work</div>
+                                    <div class="is-small button test1" id='Tuesday_btn2'>No I can't work</div>
+                                    <input hidden type="text" name="Tuesday" id="Tuesday_input"
+                                        data-bouncer-message="Please tell us yes or no for this day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Wednesday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='Wednesday_btn1'>Yes I can work</div>
+                                    <div class="is-small button test1" id='Wednesday_btn2'>No I can't work</div>
+                                    <input hidden type="text" name="Wednesday" id="Wednesday_input"
+                                        data-bouncer-message="Please tell us yes or no for this day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Thursday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='Thursday_btn1'>Yes I can work</div>
+                                    <div class="is-small button test1" id='Thursday_btn2'>No I can't work</div>
+                                    <input hidden type="text" name="Thursday" id="Thursday_input"
+                                        data-bouncer-message="Please tell us yes or no for this day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Friday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='Friday_btn1'>Yes I can work</div>
+                                    <div class="is-small button test1" id='Friday_btn2'>No I can't work</div>
+                                    <input hidden type="text" name="Friday" id="Friday_input"
+                                        data-bouncer-message="Please tell us yes or no for this day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Saturday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='Saturday_btn1'>Yes I can work</div>
+                                    <div class="is-small button test1" id='Saturday_btn2'>No I can't work</div>
+                                    <input hidden type="text" name="Saturday" id="Saturday_input" data-bouncer-message=" Please tell us yes or no for this
+                                        day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Sunday
+                                </h2>
+                                <div class="field is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='Sunday_btn1'>Yes I can work</div>
+                                    <div class="is-small button test1" id='Sunday_btn2'>No I can't work</div>
+                                    <input hidden type="text" name="Sunday" id="Sunday_input"
+                                        data-bouncer-message="Please tell us yes or no for this day">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <button class="button is-link" type="submit">submit</button>
+
+                        </form>
+                    </div>
+
+
+                    <!---VIEW/Update AVAIL FORM LOADED WHEN RESULSTS IN DB-->
+
+
+                    <div class="hidden" id="ShowUpdate-Viewguy">
+                        <button class="button is-link" type="button" onclick="checkMyAvailabilities()">Check My
+                            Availabilities</button>
+                        <button class="button is-link" type="button" onclick="deleteMyAvailabilities()">Delete
+                            My
+                            Availabilities</button>
+
+                        <form method="POST" action="http://localhost:8888/api/api.php?action=updateMyAvail"
+                            id="updateMy_AvailForm" onsubmit="updateMyAvail(event)"
+                            class="pt-3 pb-5 is-flex is-flex-direction-column">
+                            <div class="box"> This is VIEW GUY
+                                <h2 class="has-text-centered pb-2">Monday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button monday-btn" id='View_Monday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button monday-btn" id='View_Monday_btn2'>No I can't
+                                        work
+                                    </div>
+                                    <input hidden pattern="^(?:Yes|No)$" required type="text" name="Monday"
+                                        id="View_Monday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Tuesday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='View_Tuesday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button test1" id='View_Tuesday_btn2'>No I can't work
+                                    </div>
+                                    <input hidden pattern="^(?:Yes|No)$" required type="text" name="Tuesday"
+                                        id="View_Tuesday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Wednesday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='View_Wednesday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button test1" id='View_Wednesday_btn2'>No I can't work
+                                    </div>
+                                    <input hidden pattern="^(?:Yes|No)$" required type="text" name="Wednesday"
+                                        id="View_Wednesday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Thursday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='View_Thursday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button test1" id='View_Thursday_btn2'>No I can't work
+                                    </div>
+                                    <input hidden pattern="^(?:Yes|No)$" required type="text" name="Thursday"
+                                        id="View_Thursday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Friday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='View_Friday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button test1" id='View_Friday_btn2'>No I can't work
+                                    </div>
+                                    <input hidden pattern="^(?:Yes|No)$" required type="text" name="Friday"
+                                        id="View_Friday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Saturday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='View_Saturday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button test1" id='View_Saturday_btn2'>No I can't work
+                                    </div>
+                                    <input hidden pattern="^(?:Yes|No)$" required type="text" name="Saturday"
+                                        id="View_Saturday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <div class="box">
+                                <h2 class="has-text-centered pb-2">Sunday
+                                </h2>
+                                <div class="field test is-flex is-justify-content-space-between">
+                                    <div class="is-small button test1" id='View_Sunday_btn1'>Yes I can work
+                                    </div>
+                                    <div class="is-small button test1" id='View_Sunday_btn2'>No I can't work
+                                    </div>
+                                    <input type="text" hidden pattern="^(?:Yes|No)$" required name="Sunday"
+                                        id="View_Sunday1_input">
+                                </div>
+                            </div>
+                            <div class="py-3"></div>
+                            <input class="button is-link" value="submit" type="submit" form="updateMy_AvailForm">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!--LIVE CLOCK-->
+        <section>
+            <div id="menu2" class="pb-5 page">
+                <div class="py-2 border-top"></div>
+                <h2 class="has-text-white has-text-centered is-size-5 py-4">Live Clock</h2>
+                <div class="py-2"></div>
+                <span class="is-flex is-justify-content-center has-text-white is-size-4" id="live_Clock"></span>
+                <button onclick="display_last_punch()"></button>
+                <span class="py-5 is-flex is-justify-content-center has-text-white is-size-4"
+                    id="display_last_punch"></span>
+                <div class="py-2"></div>
+                <div class='p-3 clock_num_pad container'>
+                    <div class="columns is-mobile">
+                        <div class="column p-0 is-half-desktop is-offset-one-quarter-desktop">
+                            <div class="p-0 box clock_num_pad">
+                                <div class="is-flex is-justify-content-center">
+                                    <form id="punchTime">
+                                        <input class="py-5 has-text-link has-text-centered is-size-3"
+                                            name="clockInNumber" id="clockInNumber" type="text"
+                                            pattern="[^a-zA-Z][0-9]{3}"
+                                            data-bouncer-message="Please use your clock in number,you can view this in my details"
+                                            required>
+                                    </form>
+                                </div>
+                                <div class="p-2 border-top"></div>
+                                <div class="is-flex is-mobile">
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="1"
+                                        onclick='btnKey(1)'>1</div>
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="2"
+                                        onclick="btnKey(2)">2</div>
+                                    <div class="button is-ghost column has-text-centered  p-0 is-size-4" id="3"
+                                        onclick="btnKey(3)">3</div>
+                                </div>
+                                <div class="is-flex is-mobile">
+                                    <div class="button is-ghost column has-text-centered   p-0 is-size-4" id="4"
+                                        onclick="btnKey(4)">4</div>
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="5"
+                                        onclick="btnKey(5)">5</div>
+                                    <div class="button is-ghost column has-text-centered  p-0 is-size-4" id="6"
+                                        onclick="btnKey(6)">6</div>
+                                </div>
+                                <div class="is-flex is-mobile">
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="7"
+                                        onclick="btnKey(7)">7</div>
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="8"
+                                        onclick="btnKey(8)">8</div>
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="9"
+                                        onclick="btnKey(9)">9</div>
+                                </div>
+                                <div class="is-flex is-mobile">
+                                    <div class=" py-6 column has-text-centered  p-0 is-size-3"><i onclick="clearNums()"
+                                            class="fas fa-backspace"></i></div>
+                                    <div class="button is-ghost column has-text-centered p-0 is-size-4" id="0"
+                                        onclick="btnKey(0)">0</div>
+                                    <div class="column py-6 has-text-centered p-0 is-size-3">
+                                        <i onclick="punchClock()" class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--My Details-->
+        <section>
+            <div id="menu3" class="page has-text-white ">
+                <div class="py-2 border-top"></div>
+                <h2 class="has-text-white has-text-centered is-size-5 py-4">My Details</h2>
+                <div class='py-4'></div>
+                <div class="box">
+                    <div class="tabs is-boxed pb-3">
+                        <ul id="update_tabs_list">
+                            <li onclick="toggle_update(0)" class="update_tabs is-active">
+                                <a onclick="viewMyDetails()">
+                                    <span class="icon is-small"><i class="far fa-user" aria-hidden="true"></i></span>
+                                    <span>Details</span>
+                                </a>
+                            </li>
+                            <li onclick="toggle_update(1)" class="update_tabs">
+                                <a onclick="updateMyDetailsViewForm()">
+                                    <span class="icon is-small"><i class="fas fa-user-edit"
+                                            aria-hidden="true"></i></span>
+                                    <span>Update</span>
+                                </a>
+                            </li>
+                            <li onclick="toggle_update(2)" class="update_tabs">
+                                <a>
+                                    <span class="icon is-small"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input form="viewMyDetails_form" class="button is-link is-small" type="button" name="Refresh"
+                        value="Refresh" onclick="viewMyDetails(event)">
+                    <div class="detail_tab" id="update_tab2">
+                        <h2 class="has-text-weight-bold">Staff Details</h2>
+                        <form method="POST" class="pt-3 pb-5 is-flex is-flex-direction-column" id="viewMyDetails_form"
+                            action="http:/localhost:8888/api/api.php?action=viewMyDetails">
+                            <label>Employee Id</label>
+                            <input readonly type="number" name="employees_idNumber" id="employees_idNumber"
+                                placeholder="employees_idNumber" class="pb-2">
+                            <label>Clock Number</label>
+                            <input readonly type="number" id="clock_Number" name="clock_Number"
+                                placeholder="clock_number" class="pb-2">
+                            <h2 class="has-text-weight-bold">Personal Details</h2>
+                            <label>First name</label>
+                            <input readonly class="pb-2" type="text" name="first_name" id="first_name"
+                                placeholder="first_name">
+                            <label>Last name</label>
+                            <input readonly class="pb-2" type="text" name="last_name" id="last_name"
+                                placeholder="last_name">
+                            <label>Preferred name</label>
+                            <input readonly class="pb-2" name="first_name" id="preferred_name"
+                                placeholder="preferred_name">
+                            <label>Date of birth</label>
+                            <input readonly class=" pb-2" type="text" id="DOB" name="DOB" placeholder="DOB">
+                            <h2 class="has-text-weight-bold">Contact Details</h2>
+                            <label>Email</label>
+                            <input readonly type="email" id="email" name="email" placeholder="email" class="pb-2">
+                            <label>Phone number</label>
+                            <input readonly type="number" id="phone_number" name="phone_number"
+                                placeholder="phone_number" class="pb-2">
+                        </form>
+
+                        <!-- action="http://localhost:8888/api/api.php?action=upDateMyDetails" -->
+                    </div>
+                    <div id="update_tab1" class="detail_tab hidden">
+                        <h2 class="has-text-weight-bold">Staff Details</h2>
+                        <form method="POST" id="updateMyDetailsForm"
+                            action="http://localhost:8888/api/api.php?action=upDateMyDetails"
+                            onsubmit="upDateMyDetails(event)" class="pt-3 pb-5 is-flex is-flex-direction-column">
+                            <label>Clock Number</label>
+                            <input type="text" id="update_clock_Number" name="clock_Number" placeholder="clock_number"
+                                class="pb-2" pattern="^[0-9]{4}$"
+                                data-bouncer-message="Clock number needs to be 4 digits in length" required>
+                            <label>First name</label>
+                            <input class="pb-2" type="text" name="firstName" id="update_first_name"
+                                placeholder="first_name" pattern="^[a-zA-Z]{2,66}" required>
+                            <label>Last name</label>
+                            <input class="pb-2" name="lastName" id="update_last_name" pattern="^[a-zA-Z]{2,66}"
+                                placeholder="last_name" required>
+                            <label>Date of birth</label>
+                            <input class="pb-2" data-bouncer-message="Valid date range is from 1960 till current"
+                                type="date" id="update_DOB" name="DOB" required>
+                            <div class="is-flex is-flex-direction-column">
+                                <label for="department">Department:</label>
+                                <select id="update_department" name="department" form="updateMyDetailsForm" required>
+                                    <option disabled selected value> -- select an department -- </option>
+                                    <option value="Front_Counter">Front Counter</option>
+                                    <option value="Fresh_Produce">Fresh Produce</option>
+                                    <option value="Bakery">Bakery</option>
+                                    <option value="Deli">Deli</option>
+                                </select>
+                            </div>
+                            <label>Phone Number</label>
+                            <input type="text" id="update_phone_number" name="phone_number" placeholder="phone_number"
+                                pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
+                                data-bouncer-message="Please use only Australian domestic numbers" required>
+                            <label>Email</label>
+                            <input required class="pb-2" type="email" id="update_email" name="email"
+                                placeholder="email">
+                            <label>Password</label>
+                            <div class="is-flex is-justify-content-space-between">
+                                <div>
+                                    <input class="pb-2" type="password" id="update_pword_1" name="pword"
+                                        data-bouncer-message="Password must contain a min of 6 characters long and at least one digit"
+                                        pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$" required>
+                                </div>
+                                <i onclick="viewMyPassword()" id="eyeOpen" class=" hidden fas fa-eye"></i>
+                                <i onclick="viewMyPassword()" id="eyeClosed" class="fas fa-eye-slash"></i>
+                            </div>
+
+                            <input type="submit" class="button is-small is-link" name="submit" value="Update">
+                        </form>
+                    </div>
+                    <div id="update_tab3" class="detail_tab hidden">
+                        <p>Colour Mode</p>
+                        <a onclick="setStyleSheet('css/light.css')">Light Mode</a>
+                        <a onclick="setStyleSheet('css/dark.css')">Dark Mode</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Schedule-->
+        <section>
+            <div id="menu4" class="page">
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Monday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Tuesday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Wednesday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Thursday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Friday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Saturday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4"></div>
+                <div class="box">
+                    <h2 class="has-text-centered">Sunday</h2>
+                    <div class="is-flex">
+                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
+                            <label>Date:</label>
+                            <label class="pt-1">Department:</label>
+                            <label class="pt-1">Start time:</label>
+                            <label class="pt-1">Finish time:</label>
+                        </div>
+                        <div class="is-flex is-flex-direction-column">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                            <input readonly class="is-size-6" type="text" placeholder="hello">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="menu5" class="page"></section>
+    </div>
+    <footer id="end"></footer>
+    <script>
+        var validate = new Bouncer('form', {
+
+            // Classes & IDs
+            fieldClass: 'error', // Applied to fields with errors
+            errorClass: 'error-message', // Applied to the error message for invalid fields
+            fieldPrefix: 'bouncer-field_', // If a field doesn't have a name or ID, one is generated with this prefix
+            errorPrefix: 'bouncer-error_', // Prefix used for error message IDs
+
+            // Patterns
+            // Validation patterns for specific input types
+            patterns: {
+                password: /((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/,
+                email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$/,
+                url: /^(?:(?:https?|HTTPS?|ftp|FTP):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-zA-Z\u00a1-\uffff0-9]-*)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]-*)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/,
+                number: /[-+]?[0-9]*[.,]?[0-9]+/,
+                color: /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/,
+                date: /(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))/,
+                time: /(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9])/,
+                month: /(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2]))/
+            },
+
+            // Message Settings
+            messageAfterField: true, // If true, displays error message below field. If false, displays it above.
+            messageCustom: 'data-bouncer-message', // The data attribute to use for customer error messages
+            messageTarget: 'data-bouncer-target', // The data attribute to pass in a custom selector for the field error location
+
+            // Error messages by error type
+            messages: {
+                missingValue: {
+                    checkbox: 'This field is required.',
+                    text: 'Please use 2 or more letters only',
+                    radio: 'Please select a value.',
+                    select: 'Please select a value.',
+                    'select-multiple': 'Please select at least one value.',
+                    default: 'Can not be blank.'
+                },
+                patternMismatch: {
+                    text: 'Please use 2 or more letters only',
+                    password: 'Please enter a valid password.',
+                    email: 'Please enter a valid email address.',
+                    url: 'Please enter a URL.',
+                    number: 'Please enter a number',
+                    color: 'Please match the following format: #rrggbb',
+                    date: 'Please use the YYYY-MM-DD format',
+                    time: 'Please use the 24-hour time format. Ex. 23:00',
+                    month: 'Please use the YYYY-MM format',
+                    default: 'Please match the requested format.'
+                },
+                outOfRange: {
+                    over: 'Please select a value that is no more than {max}.',
+                    under: 'Please select a value that is no less than {min}.'
+                },
+                wrongLength: {
+                    over: 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.',
+                    under: 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.'
+                }
+            },
+
+            // Form Submission
+            disableSubmit: false, // If true, native form submission is suppressed even when form validates
+
+            // Custom Events
+            emitEvents: true // If true, emits custom events
+
+        });
+    </script>
+</body>
+
+
+</html>

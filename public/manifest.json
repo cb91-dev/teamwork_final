@@ -1,0 +1,34 @@
+{
+  "manifest_version": "3",
+  "short_name": "TW",
+  "name": "Team Work",
+  "icons": [
+    {
+      "src": "logo-img/favicon-16x16.ico",
+      "sizes": "16x16",
+      "type": "image/ico"
+    },
+    {
+      "src": "logo-img/favicon-32x32.ico",
+      "sizes": "32x32",
+      "type": "image/ico"
+    },
+    {
+      "src": "logo-img/teamworklogo192.jpeg",
+      "type": "image/jpeg",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo-img/teamworklogo.png",
+      "type": "image/png",
+      "sizes": "506x275"
+    }
+  ],
+  "start_url": "http://localhost:8888/TeamWork/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "background": {
+    "service_worker": "sw.js"
+  }
+}

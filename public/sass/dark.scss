@@ -1,0 +1,233 @@
+@charset "utf-8";
+
+.fa-exclamation-circle {
+  color: red;
+}
+
+.error {
+  border-color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+.error-message {
+  color: red;
+  font-style: italic;
+  margin-bottom: 1em;
+}
+
+#loader {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  padding: 5em;
+  z-index: 1;
+  background-color: rgba($color: #bfbfbf, $alpha: 0.9);
+}
+
+.notification {
+  z-index: 1;
+  position: fixed;
+}
+
+// Import a Google Font
+@import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");
+$family-primary: "Arvo";
+
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+// Import only what you need from Bulma
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/elements/button.sass";
+@import "../node_modules/bulma/sass/elements/container.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+@import "../node_modules/bulma/sass/components/navbar.sass";
+@import "../node_modules/bulma/sass/layout/hero.sass";
+@import "../node_modules/bulma/sass/layout/section.sass";
+
+//Team work
+$link: #785ceb;
+$danger: #ff3860;
+$back-ground-main: #000000;
+$back-ground-lg: linear-gradient(315deg, #000000 0%, #414141 74%);
+$backspace: #dd0404;
+
+body {
+  overflow: hidden;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-image: $back-ground-lg;
+  font-family: "Arvo";
+  background-color: $back-ground-lg;
+  overscroll-behavior: none;
+}
+
+input.myClass:disabled {
+  background-color: white;
+}
+
+input {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: none;
+}
+
+.checked {
+  background-color: $link;
+  color: white;
+  background-color: rgb(1, 187, 1);
+  font-size: 3em;
+}
+
+/// ERROR MSG
+
+#alert {
+  position: absolute;
+  height: 3em;
+  width: 90%;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  padding: 0.8em;
+}
+
+#alertClose {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: grabbing;
+}
+
+//Nav Bar Styles
+.bar {
+  color: white;
+  display: block;
+  width: 5px;
+  height: 5px;
+}
+
+a {
+  color: white;
+}
+
+.symbol {
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+$navbar-item-hover-color: none;
+$navbar-item-hover-background-color: none;
+
+a.navbar-item:focus,
+a.navbar-item:focus-within,
+a.navbar-item:hover,
+a.navbar-item.is-active,
+.navbar-link:focus,
+.navbar-link:focus-within,
+.navbar-link:hover,
+.navbar-link.is-active {
+  background-color: transparent;
+}
+
+.navbar-item,
+.navbar-link {
+  color: white;
+}
+
+.highlight {
+  color: $link;
+}
+
+.navbar {
+  background-image: $back-ground-lg;
+}
+
+@media only screen and (max-width: 1016px) {
+  .navbar {
+    background-image: $back-ground-lg;
+  }
+
+  .navbar-item,
+  .navbar-link {
+    color: #414141;
+  }
+}
+
+.border-top {
+  border-top: 1px solid $link;
+}
+
+input {
+  border: none;
+}
+
+// LIVE CLOCK PAGE
+
+.button.is-ghost:hover,
+.button.is-ghost.is-hovered {
+  color: #485fc7;
+  text-decoration: none;
+}
+
+.fa-backspace {
+  color: $backspace;
+}
+
+.fa-check {
+  color: rgb(19, 214, 45);
+}
+
+@media screen and (min-width: 769px) {
+  .columns:not(.is-desktop) {
+    display: flex;
+  }
+}
+
+.right_border {
+  border-right: solid $link 1.2px;
+}
+
+/// Availabilities
+.rotated {
+  transform: rotate(180deg);
+}
+
+.avUpdateBtn {
+  width: 100%;
+}
+
+label {
+  color: #4a4a4a;
+}
+
+.dropbox {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.box:not(:last-child),
+.content:not(:last-child),
+.notification:not(:last-child),
+.progress:not(:last-child),
+.table:not(:last-child),
+.table-container:not(:last-child),
+.title:not(:last-child),
+.subtitle:not(:last-child),
+.block:not(:last-child),
+.breadcrumb:not(:last-child),
+.level:not(:last-child),
+.message:not(:last-child),
+.pagination:not(:last-child),
+.tabs:not(:last-child) {
+  margin-bottom: 0;
+}
+
+@import "../node_modules/bulma/bulma.sass";
