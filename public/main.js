@@ -1,3 +1,11 @@
+/// Url's
+
+// Local host/local development
+const url = "http://localhost:8888/api/api.php";
+
+// // Hosting URL
+// const url = "https://bennettdesigns.dev/teamWork/api/api.php";
+
 setTimeout(function () {
   viewMyAvail();
 }, 2600);
@@ -34,12 +42,13 @@ function setStyleSheet(url) {
 function hello() {
   console.log(1);
 }
+// var url = "http://localhost:8888/api/api.php";
 function punchClock() {
   let formDate = new FormData();
   const num = document.getElementById("clockInNumber").value;
   formDate.append("clockInNumber", num);
   fetch(
-    "http://localhost:8888/api/api.php?action=clockIn",
+    url + "?action=clockIn",
 
     {
       method: "POST",
@@ -95,8 +104,10 @@ setInterval(time, 1000);
 /// Show last time clocked in
 
 function display_last_punch() {
-  var url = "http://localhost:8888/api/api.php?action=viewClock";
-  fetch(url, { credentials: "include" }).then(function (response) {
+  // var url = "http://localhost:8888/api/api.php";
+  fetch(url + "?action=viewClock", { credentials: "include" }).then(function (
+    response
+  ) {
     if (response.status == 200) {
       response.json().then((data) => {
         document.getElementById("display_last_punch").innerHTML =
@@ -120,6 +131,7 @@ function clearNums() {
 
 ///REGISTER Fetch
 function register(evt) {
+  // var url = "http://localhost:8888/api/api.php?action=register";
   hideAlert();
   // document.getElementById("loader").classList.remove("hidden");
   evt.preventDefault();
@@ -133,7 +145,7 @@ function register(evt) {
   postFormData.append(evt.target[6].name, evt.target[6].value);
   postFormData.append(evt.target[7].name, evt.target[7].value);
   postFormData.append(evt.target[8].name, evt.target[8].value);
-  fetch(evt.target.action, {
+  fetch(url + "?action=register", {
     method: "POST",
     body: postFormData,
     credentials: "include",
@@ -195,8 +207,10 @@ function postUpdate(evt) {
 //-------ONLOAD HIDE MAIN APP FACE---
 function hide_main_app() {
   ////------ONLOAD ISLOGGED IN
-  const url = "http://localhost:8888/api/api.php?action=isLoggedin";
-  fetch(url, { credentials: "include" }).then(function (headers) {
+  // var url = "http://localhost:8888/api/api.php";
+  fetch(url + "?action=isLoggedin", { credentials: "include" }).then(function (
+    headers
+  ) {
     if (headers.status === 202) {
       document.getElementById("TeamWork_APP_login").classList.add("hidden");
       showAlert("success", "Welcome Back");
@@ -234,7 +248,7 @@ function login(event) {
   var postFormData = new FormData();
   postFormData.append(event.target[0].name, event.target[0].value);
   postFormData.append(event.target[1].name, event.target[1].value);
-  fetch(event.target.action, {
+  fetch(url + "?action=login", {
     method: "POST",
     body: postFormData,
     credentials: "include",
@@ -279,8 +293,8 @@ function login(event) {
 //--------------------- LOGOUT FETCH--------------------
 
 function logOut() {
-  let url = "http://localhost:8888/api/api.php?action=logout";
-  fetch(url, {
+  // var url = "http://localhost:8888/api/api.php";
+  fetch(url + "?action=logout", {
     method: "GET",
     credentials: "include",
   }).then(function (headers) {
@@ -341,64 +355,25 @@ function back_to_login_btn() {
 // //--------- View My Details------------
 function viewMyDetails() {
   hideAlert();
-
-  // document.getElementById("loader").classList.remove("hidden");
-  var url = "http://localhost:8888/api/api.php?action=viewMyDetails";
-  fetch(url, { credentials: "include" }).then(function (response) {
-    if (response.status === 202) {
-      document.getElementById("loader").classList.add("hidden");
-      response.json().then((data) => {
-        document.getElementById("employees_idNumber").value =
-          data.employees_idNumber;
-        document.getElementById("first_name").value = data.firstName;
-        document.getElementById("last_name").value = data.lastName;
-        document.getElementById("preferred_name").value = data.firstName;
-        document.getElementById("DOB").value = data.DOB;
-        document.getElementById("email").value = data.email;
-        document.getElementById("clock_Number").value = data.clock_Number;
-        document.getElementById("phone_number").value = data.phone_number;
+  // var url = "http://localhost:8888/api/api.php";
+  document.getElementById("loader").classList.remove("hidden");
+  fetch(url + "?action=viewMyDetails", { credentials: "include" }).then(
+    function (response) {
+      if (response.status === 202) {
         document.getElementById("loader").classList.add("hidden");
-        showAlert("success", "good");
-      });
-    }
-    if (response.status === 400) {
-      showAlert("error", "Whoops");
-      document.getElementById("loader").classList.add("hidden");
-    }
-    if (response.status === 429) {
-      showAlert("error", "Whoops");
-      document.getElementById("loader").classList.add("hidden");
-    }
-    if (response.status === 500) {
-      showAlert("error", "Whoops");
-      document.getElementById("loader").classList.add("hidden");
-    }
-  });
-}
-
-/// ---------------------MY DETAILS--------------------------//////
-
-///--------------View MY DETAILS for updating-------
-function updateMyDetailsViewForm() {
-  hideAlert();
-  // document.getElementById("loader").classList.remove("hidden");
-  var url = "http://localhost:8888/api/api.php?action=viewMyDetails";
-  fetch(url, { credentials: "include" }).then(function (response) {
-    if (response.status === 202) {
-      response.json().then((data) => {
-        document.getElementById("update_first_name").value = data.firstName;
-        document.getElementById("update_last_name").value = data.lastName;
-        document.getElementById("update_DOB").value = data.DOB;
-        document.getElementById("update_department").value = data.department;
-        document.getElementById("update_email").value = data.email;
-        document.getElementById("update_phone_number").value =
-          data.phone_number;
-        document.getElementById("update_clock_Number").value =
-          data.clock_Number;
-        document.getElementById("update_pword_1").value = data.pword;
-        document.getElementById("loader").classList.add("hidden");
-        showAlert("success", "good");
-      });
+        response.json().then((data) => {
+          document.getElementById("employees_idNumber").value =
+            data.employees_idNumber;
+          document.getElementById("first_name").value = data.firstName;
+          document.getElementById("last_name").value = data.lastName;
+          document.getElementById("preferred_name").value = data.firstName;
+          document.getElementById("DOB").value = data.DOB;
+          document.getElementById("email").value = data.email;
+          document.getElementById("clock_Number").value = data.clock_Number;
+          document.getElementById("phone_number").value = data.phone_number;
+          document.getElementById("loader").classList.add("hidden");
+        });
+      }
       if (response.status === 400) {
         showAlert("error", "Whoops");
         document.getElementById("loader").classList.add("hidden");
@@ -412,11 +387,51 @@ function updateMyDetailsViewForm() {
         document.getElementById("loader").classList.add("hidden");
       }
     }
-  });
+  );
+}
+
+/// ---------------------MY DETAILS--------------------------//////
+
+///--------------View MY DETAILS for updating-------
+function updateMyDetailsViewForm() {
+  // var url = "http://localhost:8888/api/api.php";
+  hideAlert();
+  // document.getElementById("loader").classList.remove("hidden");
+  fetch(url + "?action=viewMyDetails", { credentials: "include" }).then(
+    function (response) {
+      if (response.status === 202) {
+        response.json().then((data) => {
+          document.getElementById("update_first_name").value = data.firstName;
+          document.getElementById("update_last_name").value = data.lastName;
+          document.getElementById("update_DOB").value = data.DOB;
+          document.getElementById("update_department").value = data.department;
+          document.getElementById("update_email").value = data.email;
+          document.getElementById("update_phone_number").value =
+            data.phone_number;
+          document.getElementById("update_clock_Number").value =
+            data.clock_Number;
+          document.getElementById("loader").classList.add("hidden");
+          showAlert("success", "good");
+        });
+        if (response.status === 400) {
+          showAlert("error", "Whoops");
+          document.getElementById("loader").classList.add("hidden");
+        }
+        if (response.status === 429) {
+          showAlert("error", "Whoops");
+          document.getElementById("loader").classList.add("hidden");
+        }
+        if (response.status === 500) {
+          showAlert("error", "Whoops");
+          document.getElementById("loader").classList.add("hidden");
+        }
+      }
+    }
+  );
 }
 // ----- Toggle password view
 function viewMyPassword() {
-  var x = document.getElementById("update_pword_1");
+  var x = document.getElementById("updateMyPword");
   if (x.type === "password") {
     x.type = "text";
     document.getElementById("eyeOpen").classList.remove("hidden");
@@ -441,8 +456,7 @@ function upDateMyDetails(event) {
   postFormData.append(event.target[5].name, event.target[5].value);
   postFormData.append(event.target[6].name, event.target[6].value);
   postFormData.append(event.target[7].name, event.target[7].value);
-  postFormData.append(event.target[8].name, event.target[8].value);
-  fetch(event.target.action, {
+  fetch(url + "?action=upDateMyDetails", {
     method: "POST",
     body: postFormData,
     credentials: "include",
@@ -662,7 +676,7 @@ function setMy_Avail(event) {
   postFormData.append(event.target[4].name, event.target[4].value);
   postFormData.append(event.target[5].name, event.target[5].value);
   postFormData.append(event.target[6].name, event.target[6].value);
-  fetch(event.target.action, {
+  fetch(url + "?action=insertMy_Avail", {
     method: "POST",
     body: postFormData,
     credentials: "include",
@@ -705,9 +719,9 @@ let myJSON;
 
 function viewMyAvail() {
   hideAlert();
-  // document.getElementById("loader").classList.remove("hidden");
-  var url = "http://localhost:8888/api/api.php?action=viewMyAvail";
-  fetch(url, { credentials: "include" })
+  // var url = "http://localhost:8888/api/api.php";
+  document.getElementById("loader").classList.remove("hidden");
+  fetch(url + "?action=viewMyAvail", { credentials: "include" })
     .then(function (response) {
       if (response.status === 202) {
         document
@@ -812,7 +826,6 @@ function viewMyAvail() {
       }
       if (response.status == 401) {
         document.getElementById("ShowUpdate-Viewguy").classList.add("hidden");
-        showAlert("warning", "You gotta put them in first");
         document.getElementById("ShowInsertguy").classList.add("hidden");
         document.getElementById("loader").classList.add("hidden");
       }
@@ -836,7 +849,7 @@ function updateMyAvail(evt) {
   postFormData.append(evt.target[4].name, evt.target[4].value);
   postFormData.append(evt.target[5].name, evt.target[5].value);
   postFormData.append(evt.target[6].name, evt.target[6].value);
-  fetch(evt.target.action, {
+  fetch(url + "?action=updateMyAvail", {
     method: "POST",
     body: postFormData,
     credentials: "include",
@@ -855,23 +868,25 @@ function updateMyAvail(evt) {
 function deleteMyAvailabilities() {
   hideAlert();
   // document.getElementById("loader").classList.remove("hidden");
-  var url = "http://localhost:8888/api/api.php?action=deletemyAvail";
-  fetch(url, { credentials: "include" }).then(function (response) {
-    if (response.status === 200) {
-      document.getElementById("loader").classList.add("hidden");
-      document.getElementById("ShowUpdate-Viewguy").classList.add("hidden");
-      document.getElementById("ShowInsertguy").classList.remove("hidden");
-      showAlert("success", "You deleted");
+  // var url = "http://localhost:8888/api/api.php?action=deletemyAvail";
+  fetch(url + "?action=deletemyAvail", { credentials: "include" }).then(
+    function (response) {
+      if (response.status === 200) {
+        document.getElementById("loader").classList.add("hidden");
+        document.getElementById("ShowUpdate-Viewguy").classList.add("hidden");
+        document.getElementById("ShowInsertguy").classList.remove("hidden");
+        showAlert("success", "You deleted");
+      }
+      if (response.status === 401) {
+        document.getElementById("loader").classList.add("hidden");
+        showAlert("Error", "That didn't work");
+      }
+      if (response.status === 500) {
+        document.getElementById("loader").classList.add("hidden");
+        showAlert("Error", "That didn't work");
+      }
     }
-    if (response.status === 401) {
-      document.getElementById("loader").classList.add("hidden");
-      showAlert("Error", "That didn't work");
-    }
-    if (response.status === 500) {
-      document.getElementById("loader").classList.add("hidden");
-      showAlert("Error", "That didn't work");
-    }
-  });
+  );
 }
 
 ///-------------------------------MENU----------------------

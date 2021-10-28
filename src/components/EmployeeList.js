@@ -3,6 +3,39 @@ import EmployeeForm from ".//EmployeeForm";
 
 export default function EmployeeList(props) {
   const [isActive, setActive] = useState(false);
+  const [employeeId, setEmployeeId] = useState(props.id);
+  const [employeeName, setEmployeeName] = useState(
+    props.title + " " + props.lastName
+  );
+  const employeeNameHandler = () => {
+    setEmployeeName();
+  };
+  const employeeIdHandler = () => {
+    employeeIdHandler();
+  };
+
+  function deleteEmployee() {
+    const Employee_Num = {
+      Employee_id: document.getElementById(this.props.id).value,
+    };
+
+    var url = "http://localhost:8888/api/api.php?action=deleteEmployee";
+    fetch(url, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(Employee_Num),
+    }).then(function (response) {
+      if (response.status === 202) {
+        props.showAlert("success", "Employee removed");
+      }
+      if (response.status === 401) {
+        props.showAlert("error", "This action didn't work");
+      }
+      if (response.status === 500) {
+        props.showAlert("error", "This action didn't work");
+      }
+    });
+  }
 
   function opener() {
     setActive(true);
@@ -17,9 +50,20 @@ export default function EmployeeList(props) {
           <div className="panel-icon">
             <i className="fas fa-user" aria-hidden="true"></i>
           </div>
-          {props.title}
+          <input
+            onChange={employeeNameHandler}
+            value={props.title + " " + props.lastName}
+          />
         </div>
-        <div className="button is-danger is-small">Remove</div>
+        <div className="button is-danger is-small" onClick={deleteEmployee}>
+          Remove
+        </div>
+        <input
+          hidden
+          onChange={employeeIdHandler}
+          id={props.id}
+          value={props.id}
+        />
       </a>
       <div className={`modal ${isActive ? "is-active" : ""}`}>
         <div className="modal-background"></div>
@@ -47,6 +91,8 @@ export default function EmployeeList(props) {
               department={props.department}
               employees_idNumber={props.employees_idNumber}
               dateOfBirth={props.dateOfBirth}
+              showAlert={props.showAlert}
+              closer={closer}
             />
           </section>
           <footer className="modal-card-foot">

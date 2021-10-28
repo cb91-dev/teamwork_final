@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import EmployeeFormNew from "./EmployeeFormNew";
 import EmployeeList from "./EmployeeList";
 
-export default function Employee() {
+export default function Employee(props) {
   const [dataEmployee, setDataEmployee] = useState([]);
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(null);
@@ -13,6 +13,7 @@ export default function Employee() {
     fetch(url, { credentials: "include" })
       .then((response) => {
         if (response.ok) {
+          props.showAlert("success", "Here is a list of current employees");
           return response.json();
         }
       })
@@ -75,6 +76,7 @@ export default function Employee() {
             clock_Number={dataEmployee.clock_Number}
             department={dataEmployee.department}
             dateOfBirth={dataEmployee.DOB}
+            showAlert={props.showAlert}
           />
         ))}
       </article>
@@ -90,7 +92,7 @@ export default function Employee() {
             ></button>
           </header>
           <section className="modal-card-body">
-            <EmployeeFormNew />
+            <EmployeeFormNew showAlert={props.showAlert} closer={closer} />
           </section>
           <footer className="modal-card-foot">
             <button onClick={closer} className="button is-danger">

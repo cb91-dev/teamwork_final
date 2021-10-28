@@ -1,38 +1,91 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function EmployeeForm(props) {
+  const [userInput, setUserInput] = useState({});
+
+  const firstNameChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      firstName: event.target.value,
+    });
+  };
+  const lastNameChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      lastName: event.target.value,
+    });
+  };
+  const dateChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      DOB: event.target.value,
+    });
+  };
+  const emailChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      email: event.target.value,
+    });
+  };
+  const pwordChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      pword: event.target.value,
+    });
+  };
+  const phoneNumberChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      phone_number: event.target.value,
+    });
+  };
+  const clockNumberChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      clockInNum: event.target.value,
+    });
+  };
+  const departmentChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      department: event.target.value,
+    });
+  };
+  const is_managerChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      is_manager: event.target.value,
+    });
+  };
+
   function createNewEmployee(evt) {
-    const water = {
-      a: document.getElementById("employees_idNumber_view").value,
-      b: document.getElementById("first_name_admin_view").value,
-      c: document.getElementById("last_name_admin_view").value,
-      d: document.getElementById("dataOfBirth_admin_view").value,
-      e: document.getElementById("email_admin_view").value,
-      f: document.getElementById("password_admin_view").value,
-      f: document.getElementById("phone_number_admin_view").value,
-      f: document.getElementById("clock_Number_admin_view").value,
-      f: document.getElementById("department_admin_view").value,
-      f: document.getElementById("manager_admin_view").value,
+    const newEmployeeData = {
+      userInput,
     };
-    evt.preventDefault();
-    // document.getElementById("loader").classList.remove("hidden");
-    var url = "http://localhost:8888/api/api.php?action=upDateMyDetails";
+    console.log(newEmployeeData);
+    evt.preventDefault(evt);
+    var url = "http://localhost:8888/api/api.php?action=addNewEmployee";
     fetch(url, {
       method: "POST",
-      body: JSON.stringify(water),
+      body: JSON.stringify(newEmployeeData),
       credentials: "include",
     }).then(function (headers) {
       if (headers.status === 201) {
         console.log("it worked from this end");
+        props.showAlert("success", "Employee added");
+        props.closer();
       }
       if (headers.status === 400) {
         console.log(1);
+        props.showAlert("error", "This action didn't work");
       }
       if (headers.status === 429) {
         console.log(1);
+        props.showAlert("error", "This action didn't work");
       }
       if (headers.status === 500) {
         console.log(1);
+        props.showAlert("error", "This action didn't work");
       }
     });
   }
@@ -46,12 +99,13 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.firstName}
-                id="first_name_admin_view"
+                id="firstNameAdmin_new"
                 className="input is-link"
                 type="text"
-                placeholder="Text input"
+                placeholder="Please enter first name here"
                 name="firstName"
                 required
+                onChange={firstNameChangeHandler}
                 pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+"
               />
               <span className="icon is-small is-left">
@@ -65,11 +119,13 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.lastName}
-                id="last_name_admin_NEW"
+                id="lastNameAdmin_new"
                 className="input is-link"
                 type="text"
                 name="lastName"
                 required
+                placeholder="Please enter last name here"
+                onChange={lastNameChangeHandler}
                 pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+"
               />
               <span className="icon is-small is-left">
@@ -82,10 +138,11 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.dateOfBirth}
-                id="dataOfBirth_admin_NEW"
+                id="dataOfBirthAdmin_new"
                 className="input is-link"
-                type="data"
+                type="date"
                 name="DOB"
+                onChange={dateChangeHandler}
                 min="1970-01-01"
                 max="2021-12-31"
                 data-bouncer-message="Valid date range is from 1960 till current"
@@ -102,8 +159,10 @@ export default function EmployeeForm(props) {
               <input
                 defaultValue={props.email}
                 className="input is-link"
-                id="email_admin_NEW"
+                id="emailAdmin_new"
+                onChange={emailChangeHandler}
                 type="email"
+                placeholder="Please enter a valid email here"
                 name="email"
                 required
               />
@@ -117,15 +176,17 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 className="input is-link"
-                id="password_admin_NEW"
+                id="passwordAdmin_new"
                 type="password"
                 name="pword"
                 required
+                placeholder="Please enter a password here"
+                onChange={pwordChangeHandler}
                 data-bouncer-message="Password must contain a min of 6 characters long with one upper case chartcter and at least one digit"
                 pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$"
               />
               <span className="icon is-small is-left">
-                <i className="fas fa-envelope"></i>
+                <i className="fas fa-unlock-alt"></i>
               </span>
             </div>
           </div>
@@ -135,9 +196,11 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.phone_number}
-                id="phone_number_admin_NEw"
+                id="phoneNumberAdmin_new"
                 className="input is-link"
                 type="text"
+                placeholder="Please enter a phone number here"
+                onChange={phoneNumberChangeHandler}
                 name="phone_number"
                 pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
                 data-bouncer-message="Please use only Australian domestic numbers"
@@ -154,8 +217,10 @@ export default function EmployeeForm(props) {
               <input
                 defaultValue={props.clock_Number}
                 className="input is-link"
-                id="clock_Number_admin_NEW"
+                id="clockInNumAdmin_new"
+                placeholder="Please enter a clock number here"
                 type="number"
+                onChange={clockNumberChangeHandler}
                 data-bouncer-message="Clock number needs to be 4 digits in length"
                 name="clockInNum"
                 required
@@ -170,8 +235,9 @@ export default function EmployeeForm(props) {
             <div className="control">
               <div className="select">
                 <select
+                  onChange={departmentChangeHandler}
                   defaultValue={"DEFAULT"}
-                  id="department_admin_NEW"
+                  id="departmentAdmin_new"
                   name="department"
                 >
                   <option disabled value="DEFAULT">
@@ -191,8 +257,9 @@ export default function EmployeeForm(props) {
             <div className="control">
               <div className="select">
                 <select
+                  onChange={is_managerChangeHandler}
                   defaultValue={props.is_manager}
-                  id="manager_admin_NEW"
+                  id="is_managerAdmin_new"
                   name="is_manager"
                 >
                   {" "}

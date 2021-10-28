@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ScheduleMakerEmployeeList from "./ScheduleMakerEmployeeList";
 
-function ScheduleMarker() {
+function ScheduleMarker(props) {
   const [listEmployee, setlistEmployee] = useState([]);
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(null);
@@ -29,9 +29,12 @@ function ScheduleMarker() {
   //     listEmployee.push(<option key={i}>{listEmployee.firstName}</option>);
   //   }
   // }
-
+  const handleSetTest = () => {
+    props.showAlert("error", "Whoops");
+  };
   return (
     <div>
+      <button onClick={handleSetTest}></button>
       <article className="message is-link">
         <div className="message-header">
           <p onClick={ListOfEmployees} className="is-size-5">
@@ -117,25 +120,3 @@ function ScheduleMarker() {
 }
 
 export default ScheduleMarker;
-
-// function CreateSchedule(evt) {
-//   evt.preventDefault();
-//   var postFormData = new FormData();
-//   postFormData.append(evt.target[0].name, evt.target[0].value);
-//   postFormData.append(evt.target[1].name, evt.target[1].value);
-//   postFormData.append(evt.target[2].name, evt.target[2].value);
-//   postFormData.append(evt.target[3].name, evt.target[3].value);
-//   postFormData.append(evt.target[4].name, evt.target[4].value);
-//   postFormData.append(evt.target[5].name, evt.target[5].value);
-//   fetch(evt.target.action, {
-//     method: "POST",
-//     body: postFormData,
-//     credentials: "include",
-//   }).then(function (headers) {
-//     if (headers.status === 201) {
-//     }
-//     headers.text().then(function (body) {
-//       document.getElementById("insert_box_msg").innerHTML = body;
-//     });
-//   });
-// }

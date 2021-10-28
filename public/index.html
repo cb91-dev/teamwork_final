@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- method="POST" action="http://localhost:8888/api/api.php?action=login" -->
 
 <head>
     <meta charset="utf-8">
@@ -25,25 +26,7 @@
 
 
 <body onload=hide_main_app();onloadtheme()>
-    <!---ERROR and LOADING BOX-->
 
-    <div class="notification mb-0" id="alertbox" onclick="hideAlert()" hidden>
-        <button class="delete" id="alertclose">
-        </button>
-        <div id="alertmsg">
-            ERRO MSG
-        </div>
-    </div>
-    <div class="hidden" id="loader">
-        <div class="is-flex is-justify-content-center is-flex-direction-column-reverse">
-            <progress class="progress is-large is-link" max="100">20%</progress>
-            <p class="has-text-centered is-size-4">Hang tight we are loading</p>
-        </div>
-    </div>
-    <div class="hidden" id="loader-theme">
-        <div class="loader">
-        </div>
-    </div>
     <header class=" header" id="TeamWork_APP_login">
         <div class="hero is-fullheight">
             <div class="hero-body">
@@ -56,8 +39,7 @@
                     <div class="columns is-centered" id="login_box">
                         <div class="column is-4">
                             <div class="box border">
-                                <form method="POST" id="login_form" onSubmit=login(event)
-                                    action="http://localhost:8888/api/api.php?action=login">
+                                <form id="login_form" onSubmit=login(event)>
                                     <div class="field">
                                         <label>Email</label>
                                         <div class="control has-icons-left has-icons-right">
@@ -69,7 +51,8 @@
                                         <label>Password</label>
                                         <div class="control has-icons-left has-icons-right">
                                             <input pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$"
-                                                class="input is-link" type="password" name="pword" required>
+                                                class="input is-link" type="password" name="pword" id="pword_login"
+                                                required>
                                             <span class="icon is-small is-left">
                                                 <i class="fas fa-unlock-alt"></i>
                                             </span>
@@ -91,8 +74,7 @@
                         <div class="box">
                             <h2 class="has-text-link has-text-centered is-size-4">Let's get it
                                 grooving</h2>
-                            <form method="POST" onsubmit="register(event)"
-                                action="http://localhost:8888/api/api.php?action=register" id="register">
+                            <form method="POST" onsubmit="register(event)" id="register">
                                 <div class="field">
                                     <label>First Name</label>
                                     <input type="text" class="input is-link" name="firstName" required
@@ -155,6 +137,7 @@
             </div>
         </div>
     </header>
+
     <div id="TeamWork_APP_logged_in">
         <div>
             <nav class="navbar main is-family-primary" aria-label="main navigation">
@@ -207,6 +190,25 @@
                 </div>
             </nav>
         </div>
+        <!---ERROR and LOADING BOX-->
+
+        <div class="notification mb-0" id="alertbox" onclick="hideAlert()">
+            <button class="delete" id="alertclose">
+            </button>
+            <div id="alertmsg">
+                ERRO MSG
+            </div>
+        </div>
+        <div class="hidden" id="loader">
+            <div class="is-flex is-justify-content-center is-flex-direction-column-reverse">
+                <progress class="progress is-large is-link" max="100">20%</progress>
+                <p class="has-text-centered is-size-4">Hang tight we are loading</p>
+            </div>
+        </div>
+        <div class="hidden" id="loader-theme">
+            <div class="loader">
+            </div>
+        </div>
         <!--Availabilities-->
         <section>
             <div id="menu1" class="page has-text-white has-text-centered">
@@ -226,8 +228,7 @@
                         <!---INSERT AVAIL FORM LOADED IS NO RESULSTS IN DB-->
 
 
-                        <form id="setMy_AvailForm" action="http://localhost:8888/api/api.php?action=insertMy_Avail"
-                            method="POST" onsubmit="setMy_Avail(event)"
+                        <form id="setMy_AvailForm" onsubmit="setMy_Avail(event)"
                             class="pt-3 pb-5 is-flex is-flex-direction-column">
                             <div class="box">
                                 <h2 class="has-text-centered pb-2">Monday
@@ -324,8 +325,7 @@
                             My
                             Availabilities</button>
 
-                        <form method="POST" action="http://localhost:8888/api/api.php?action=updateMyAvail"
-                            id="updateMy_AvailForm" onsubmit="updateMyAvail(event)"
+                        <form id="updateMy_AvailForm" onsubmit="updateMyAvail(event)"
                             class="pt-3 pb-5 is-flex is-flex-direction-column">
                             <div class="box"> This is VIEW GUY
                                 <h2 class="has-text-centered pb-2">Monday
@@ -525,31 +525,31 @@
                     <input form="viewMyDetails_form" class="button is-link is-small" type="button" name="Refresh"
                         value="Refresh" onclick="viewMyDetails(event)">
                     <div class="detail_tab" id="update_tab2">
-                        <h2 class="has-text-weight-bold">Staff Details</h2>
+                        <h2 class="is-size-4 label has-text-weight-bold pt-4">Staff Details</h2>
                         <form method="POST" class="pt-3 pb-5 is-flex is-flex-direction-column" id="viewMyDetails_form"
                             action="http:/localhost:8888/api/api.php?action=viewMyDetails">
-                            <label>Employee Id</label>
+                            <label class="label">Employee Id</label>
                             <input readonly type="number" name="employees_idNumber" id="employees_idNumber"
                                 placeholder="employees_idNumber" class="pb-2">
-                            <label>Clock Number</label>
+                            <label class="label">Clock Number</label>
                             <input readonly type="number" id="clock_Number" name="clock_Number"
                                 placeholder="clock_number" class="pb-2">
-                            <h2 class="has-text-weight-bold">Personal Details</h2>
-                            <label>First name</label>
-                            <input readonly class="pb-2" type="text" name="first_name" id="first_name"
+                            <h2 class="is-size-4 label has-text-weight-bold pt-5">Personal Details</h2>
+                            <label class="label">First name</label>
+                            <input readonly class="pb-2 is-size-6" type="text" name="first_name" id="first_name"
                                 placeholder="first_name">
-                            <label>Last name</label>
+                            <label class="label">Last name</label>
                             <input readonly class="pb-2" type="text" name="last_name" id="last_name"
                                 placeholder="last_name">
-                            <label>Preferred name</label>
+                            <label class="label">Preferred name</label>
                             <input readonly class="pb-2" name="first_name" id="preferred_name"
                                 placeholder="preferred_name">
-                            <label>Date of birth</label>
+                            <label class="label">Date of birth</label>
                             <input readonly class=" pb-2" type="text" id="DOB" name="DOB" placeholder="DOB">
-                            <h2 class="has-text-weight-bold">Contact Details</h2>
-                            <label>Email</label>
+                            <h2 class="label is-size-4 has-text-weight-bold pt-5">Contact Details</h2>
+                            <label class="label">Email</label>
                             <input readonly type="email" id="email" name="email" placeholder="email" class="pb-2">
-                            <label>Phone number</label>
+                            <label class="label">Phone number</label>
                             <input readonly type="number" id="phone_number" name="phone_number"
                                 placeholder="phone_number" class="pb-2">
                         </form>
@@ -561,21 +561,21 @@
                         <form method="POST" id="updateMyDetailsForm"
                             action="http://localhost:8888/api/api.php?action=upDateMyDetails"
                             onsubmit="upDateMyDetails(event)" class="pt-3 pb-5 is-flex is-flex-direction-column">
-                            <label>Clock Number</label>
+                            <label class="label">Clock Number</label>
                             <input type="text" id="update_clock_Number" name="clock_Number" placeholder="clock_number"
                                 class="pb-2" pattern="^[0-9]{4}$"
                                 data-bouncer-message="Clock number needs to be 4 digits in length" required>
-                            <label>First name</label>
+                            <label class="label">First name</label>
                             <input class="pb-2" type="text" name="firstName" id="update_first_name"
                                 placeholder="first_name" pattern="^[a-zA-Z]{2,66}" required>
-                            <label>Last name</label>
+                            <label class="label">Last name</label>
                             <input class="pb-2" name="lastName" id="update_last_name" pattern="^[a-zA-Z]{2,66}"
                                 placeholder="last_name" required>
-                            <label>Date of birth</label>
+                            <label class="label">Date of birth</label>
                             <input class="pb-2" data-bouncer-message="Valid date range is from 1960 till current"
                                 type="date" id="update_DOB" name="DOB" required>
                             <div class="is-flex is-flex-direction-column">
-                                <label for="department">Department:</label>
+                                <label class="label" for="department">Department:</label>
                                 <select id="update_department" name="department" form="updateMyDetailsForm" required>
                                     <option disabled selected value> -- select an department -- </option>
                                     <option value="Front_Counter">Front Counter</option>
@@ -584,31 +584,44 @@
                                     <option value="Deli">Deli</option>
                                 </select>
                             </div>
-                            <label>Phone Number</label>
+                            <label class="label">Phone Number</label>
                             <input type="text" id="update_phone_number" name="phone_number" placeholder="phone_number"
                                 pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
                                 data-bouncer-message="Please use only Australian domestic numbers" required>
-                            <label>Email</label>
+                            <label class="label">Email</label>
                             <input required class="pb-2" type="email" id="update_email" name="email"
                                 placeholder="email">
-                            <label>Password</label>
-                            <div class="is-flex is-justify-content-space-between">
-                                <div>
-                                    <input class="pb-2" type="password" id="update_pword_1" name="pword"
-                                        data-bouncer-message="Password must contain a min of 6 characters long and at least one digit"
-                                        pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$" required>
-                                </div>
-                                <i onclick="viewMyPassword()" id="eyeOpen" class=" hidden fas fa-eye"></i>
-                                <i onclick="viewMyPassword()" id="eyeClosed" class="fas fa-eye-slash"></i>
-                            </div>
+
 
                             <input type="submit" class="button is-small is-link" name="submit" value="Update">
                         </form>
                     </div>
                     <div id="update_tab3" class="detail_tab hidden">
-                        <p>Colour Mode</p>
-                        <a onclick="setStyleSheet('css/light.css')">Light Mode</a>
-                        <a onclick="setStyleSheet('css/dark.css')">Dark Mode</a>
+                        <div class="is-flex is-flex-direction-column">
+                            <div>
+                                <p>Colour Mode</p>
+                                <a onclick="setStyleSheet('css/light.css')">Light Mode</a>
+                                <a onclick="setStyleSheet('css/dark.css')">Dark Mode</a>
+                            </div>
+                            <form class="field">
+                                <div class="is-flex">
+                                    <label class="label">Password</label>
+                                    <i onclick="viewMyPassword()" id="eyeOpen" class="hidden fas fa-eye pt-1 pl-2"></i>
+                                    <i onclick="viewMyPassword()" id="eyeClosed" class="fas fa-eye-slash pt-1 pl-2"></i>
+                                </div>
+                                <div class="control has-icons-left has-icons-right">
+                                    <input class="input is-link pb-2" type="password" id="updateMyPword" name="pword"
+                                        data-bouncer-message="Password must contain a min of 6 characters long and at least one digit"
+                                        pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <span class="icon is-small is-right">
+                                    </span>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -747,7 +760,28 @@
         <section id="menu5" class="page"></section>
     </div>
     <footer id="end"></footer>
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAlaTrq5tuqz_It4tJd7ueoi2a_ctANLSE",
+    authDomain: "teamwork-c288a.firebaseapp.com",
+    projectId: "teamwork-c288a",
+    storageBucket: "teamwork-c288a.appspot.com",
+    messagingSenderId: "999632819387",
+    appId: "1:999632819387:web:be8f83a9379ab8691c459e",
+    measurementId: "G-ZDSXJ83MSD"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
         var validate = new Bouncer('form', {
 
             // Classes & IDs

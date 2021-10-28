@@ -1,38 +1,111 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function EmployeeForm(props) {
+  const [updatedInput, setUpdatedInput] = useState({});
+
+  let employees_idNumber = props.employees_idNumber;
+  let firstName = props.firstName;
+  let department = props.department;
+  let clockInNum = props.clockInNum;
+  let phone_number = props.phone_number;
+  let is_manager = props.is_manager;
+  let lastName = props.lastName;
+  let DOB = props.DOB;
+  let email = props.email;
+
+  const employeeIdHandler = () => {
+    setUpdatedInput({
+      ...updatedInput,
+      employees_idNumber: props.employees_idNumber,
+    });
+    console.log(1);
+  };
+  const firstNameUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      firstName: event.target.value,
+    });
+    console.log(updatedInput);
+  };
+  const lastNameUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      lastName: event.target.value,
+    });
+    console.log(3);
+  };
+  const dateUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      DOB: event.target.value,
+    });
+    console.log(4);
+  };
+  const emailUpdateChangeHanndler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      email: event.target.value,
+    });
+  };
+  const phoneNumberUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      phone_number: event.target.value,
+    });
+  };
+  const clockNumberUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      clockInNum: event.target.value,
+    });
+  };
+  const departmentUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      department: event.target.value,
+    });
+  };
+  const is_managerUpdateChangeHandler = (event) => {
+    setUpdatedInput({
+      ...updatedInput,
+      is_manager: event.target.value,
+    });
+  };
+
   function updateMyDetailsViewForm(evt) {
-    const water = {
-      employees_idNumber: document.getElementById("employees_idNumber_view")
-        .value,
-      firstName: document.getElementById("first_name_admin_view").value,
-      lastName: document.getElementById("last_name_admin_view").value,
-      DOB: document.getElementById("dataOfBirth_admin_view").value,
-      email: document.getElementById("email_admin_view").value,
-      phone_number: document.getElementById("phone_number_admin_view").value,
-      clock_Number: document.getElementById("clock_Number_admin_view").value,
-      department: document.getElementById("department_admin_view").value,
-      is_manager: document.getElementById("manager_admin_view").value,
+    const updatedEmployeeData = {
+      employees_idNumber: employees_idNumber,
+      firstName: firstName,
+      department: department,
+      clockInNum: clockInNum,
+      phone_number: phone_number,
+      is_manager: is_manager,
+      lastName: lastName,
+      DOB: DOB,
+      email: email,
     };
-    evt.preventDefault();
-    // document.getElementById("loader").classList.remove("hidden");
+    console.log(updatedEmployeeData);
+    evt.preventDefault(evt);
     var url = "http://localhost:8888/api/api.php?action=upDateEmployee";
     fetch(url, {
       method: "POST",
-      body: JSON.stringify(water),
+      body: JSON.stringify(updatedEmployeeData),
       credentials: "include",
     }).then(function (headers) {
       if (headers.status === 201) {
-        console.log("it worked from this end");
+        props.showAlert("success", "Employee added");
+        props.closer();
       }
-      if (headers.status === 400) {
-        console.log(1);
+      if (headers.status === 401) {
+        props.showAlert("error", "This action didn't work");
+        props.closer();
       }
       if (headers.status === 429) {
-        console.log(1);
+        props.showAlert("error", "This action didn't work");
+        props.closer();
       }
       if (headers.status === 500) {
-        console.log(1);
+        props.showAlert("error", "This action didn't work");
+        props.closer();
       }
     });
   }
@@ -46,10 +119,11 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 readOnly
-                value={props.employees_idNumber}
-                id="employees_idNumber_view"
+                defaultValue={props.employees_idNumber}
+                id={props.id}
                 name="employees_idNumber"
                 type="text"
+                onChange={employeeIdHandler}
                 className="is-size-3"
               />
             </div>
@@ -59,6 +133,7 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.firstName}
+                onChange={firstNameUpdateChangeHandler}
                 id="first_name_admin_view"
                 className="input is-link"
                 type="text"
@@ -78,6 +153,7 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.lastName}
+                onChange={lastNameUpdateChangeHandler}
                 id="last_name_admin_view"
                 className="input is-link"
                 type="text"
@@ -96,11 +172,11 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.dateOfBirth}
+                onChange={dateUpdateChangeHandler}
                 id="dataOfBirth_admin_view"
                 className="input is-link"
                 type="date"
                 name="DOB"
-                value="2018-07-22"
                 min="1970-01-01"
                 max="2021-12-31"
                 data-bouncer-message="Valid date range is from 1960 till current"
@@ -116,6 +192,7 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.email}
+                onChange={emailUpdateChangeHanndler}
                 className="input is-link"
                 id="email_admin_view"
                 type="email"
@@ -132,9 +209,10 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.phone_number}
+                onChange={phoneNumberUpdateChangeHandler}
                 id="phone_number_admin_view"
                 className="input is-link"
-                type="text"
+                type="number"
                 name="phone_number"
                 pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
                 data-bouncer-message="Please use only Australian domestic numbers"
@@ -150,6 +228,7 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.clock_Number}
+                onChange={clockNumberUpdateChangeHandler}
                 className="input is-link"
                 id="clock_Number_admin_view"
                 type="number"
@@ -168,6 +247,7 @@ export default function EmployeeForm(props) {
             <div className="control">
               <div className="select">
                 <select
+                  onChange={departmentUpdateChangeHandler}
                   defaultValue={props.department}
                   id="department_admin_view"
                   name="department"
@@ -189,6 +269,7 @@ export default function EmployeeForm(props) {
             <div className="control">
               <div className="select">
                 <select
+                  onChange={is_managerUpdateChangeHandler}
                   defaultValue={props.is_manager}
                   id="manager_admin_view"
                   name="is_manager"
@@ -212,32 +293,3 @@ export default function EmployeeForm(props) {
     </div>
   );
 }
-
-// fetch(url, { credentials: "include" }).then(function (response) {
-//   if (response.status === 201) {
-//     response.json().then((data) => {
-//       document.getElementById("first_name_admin_view").value =
-//         data.firstName;
-//       document.getElementById("last_name_admin_view").value = data.lastName;
-//       document.getElementById("dataOfBirth_admin_view").value = data.DOB;
-//       document.getElementById("department_admin_view").value =
-//         data.department;
-//       document.getElementById("email_admin_view").value = data.email;
-//       document.getElementById("phone_number_admin_view").value =
-//         data.phone_number;
-//       document.getElementById("clock_Number_admin_view").value =
-//         data.clock_Number;
-//       document.getElementById("clock_Number_admin_view").value =
-//         data.clock_Number;
-//     });
-//     if (response.status === 400) {
-//       console.log(1);
-//     }
-//     if (response.status === 429) {
-//       console.log(1);
-//     }
-//     if (response.status === 500) {
-//       console.log(1);
-//     }
-//   }
-// });
