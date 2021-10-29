@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ScheduleMarker(props) {
+function ScheduleMaker(props) {
   const [listEmployee, setlistEmployee] = useState([]);
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(null);
@@ -61,32 +61,40 @@ function ScheduleMarker(props) {
       time_from: event.target.value,
     });
   };
+
   function createSchedule(evt) {
-    const newScheduleData = {
-      ScheduleData,
-    };
     evt.preventDefault();
-    console.log(ScheduleData);
+    // let newScheduleData = {
+    //   ScheduleData,
+    // };
+    let object = {};
+    const data = new FormData(evt.target.parentNode);
+    data.forEach(function (value, key) {
+      object[key] = value;
+    });
+    console.log(object);
+
+    // console.log(newScheduleData);
     var url = "http://localhost:8888/api/api.php?action=createSchedule";
     fetch(url, {
       method: "POST",
-      body: JSON.stringify(newScheduleData),
+      body: JSON.stringify(object),
       credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-        }
-      })
-      .then((res) => {
-        return null;
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        seterror(error);
-      })
-      .finally(() => {
-        setloading(false);
-      });
+    }).then(function (headers) {
+      if (headers.status === 201) {
+        console.log("it worked from this end");
+        props.showAlert("success", "Shift added");
+      }
+      if (headers.status === 401) {
+        props.showAlert("error", "This action didn't work");
+      }
+      if (headers.status === 429) {
+        props.showAlert("error", "This action didn't work");
+      }
+      if (headers.status === 500) {
+        props.showAlert("error", "This action didn't work");
+      }
+    });
   }
 
   return (
@@ -104,6 +112,7 @@ function ScheduleMarker(props) {
               <div className="control has-icons-left has-icons-right">
                 <input
                   name="Date"
+                  id="Date"
                   onChange={dateChangeHandler}
                   className="input"
                   type="date"
@@ -120,6 +129,7 @@ function ScheduleMarker(props) {
                   <select
                     onChange={dayChangeHandler}
                     name="Day"
+                    id="Day"
                     defaultValue={"DEFAULT"}
                   >
                     <option disabled value="DEFAULT">
@@ -144,6 +154,7 @@ function ScheduleMarker(props) {
                   <select
                     onChange={departmentChangeHandler}
                     name="Department"
+                    id="Department"
                     defaultValue={"DEFAULT"}
                   >
                     <option disabled value="DEFAULT">
@@ -168,9 +179,9 @@ function ScheduleMarker(props) {
                   >
                     {listEmployee.map((Employee) => (
                       <option
-                        key={Employee.employees_idNumber}
-                        id={Employee.employees_idNumber}
-                        value={Employee.employee_idNumber}
+                        // key={Employee.employees_idNumber}
+                        // id={Employee.employees_idNumber}
+                        value={Employee.employees_idNumber}
                       >
                         {Employee.firstName + " " + Employee.lastName}
                       </option>
@@ -187,6 +198,7 @@ function ScheduleMarker(props) {
                   name="time_from"
                   className="input"
                   type="text"
+                  id="startTime"
                 />
                 <span className="icon is-small is-left">
                   <i className="fa fa-clock"></i>
@@ -201,6 +213,7 @@ function ScheduleMarker(props) {
                   name="time_till"
                   className="input"
                   type="text"
+                  id="time_till"
                 />
                 <span className="icon is-small is-left">
                   <i className="far fa-clock"></i>
@@ -217,4 +230,4 @@ function ScheduleMarker(props) {
   );
 }
 
-export default ScheduleMarker;
+export default ScheduleMaker;

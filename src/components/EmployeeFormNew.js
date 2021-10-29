@@ -62,8 +62,7 @@ export default function EmployeeForm(props) {
     const newEmployeeData = {
       userInput,
     };
-    console.log(newEmployeeData);
-    evt.preventDefault(evt);
+    evt.preventDefault();
     var url = "http://localhost:8888/api/api.php?action=addNewEmployee";
     fetch(url, {
       method: "POST",

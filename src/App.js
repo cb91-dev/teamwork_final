@@ -1,6 +1,6 @@
 import React from "react";
 import Employee from "./components/Employee";
-import ScheduleMarker from "./components/ScheduleMaker";
+import ScheduleMaker from "./components/ScheduleMaker";
 
 export default function App() {
   function showAlert(msgtype, msg) {
@@ -57,7 +57,7 @@ export default function App() {
         Admin
       </h1>
       <Employee showAlert={showAlert} />
-      <ScheduleMarker showAlert={showAlert} />
+      <ScheduleMaker showAlert={showAlert} />
     </div>
   );
 }

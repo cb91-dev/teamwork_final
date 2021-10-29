@@ -103,7 +103,6 @@ class EmployeeForm extends React.Component {
       DOB: this.state.dateOfBirth,
       email: this.state.email,
     };
-    console.log(updatedEmployeeData);
     evt.preventDefault(evt);
     var url = "http://localhost:8888/api/api.php?action=upDateEmployee";
     fetch(url, {
