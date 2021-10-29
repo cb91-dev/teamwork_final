@@ -84,7 +84,7 @@ export default function Employee(props) {
         <div className="modal-background"></div>
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">Create A Employee</p>
+            <p className="modal-card-title">Add New Employee</p>
             <button
               className="delete has-background-danger"
               onClick={closer}

@@ -75,17 +75,17 @@ export default function EmployeeForm(props) {
         props.showAlert("success", "Employee added");
         props.closer();
       }
-      if (headers.status === 400) {
-        console.log(1);
+      if (headers.status === 401) {
         props.showAlert("error", "This action didn't work");
+        props.closer();
       }
       if (headers.status === 429) {
-        console.log(1);
         props.showAlert("error", "This action didn't work");
+        props.closer();
       }
       if (headers.status === 500) {
-        console.log(1);
         props.showAlert("error", "This action didn't work");
+        props.closer();
       }
     });
   }
@@ -99,7 +99,7 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.firstName}
-                id="firstNameAdmin_new"
+                id={props.id}
                 className="input is-link"
                 type="text"
                 placeholder="Please enter first name here"
@@ -119,7 +119,6 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.lastName}
-                id="lastNameAdmin_new"
                 className="input is-link"
                 type="text"
                 name="lastName"
@@ -138,7 +137,6 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.dateOfBirth}
-                id="dataOfBirthAdmin_new"
                 className="input is-link"
                 type="date"
                 name="DOB"
@@ -159,7 +157,6 @@ export default function EmployeeForm(props) {
               <input
                 defaultValue={props.email}
                 className="input is-link"
-                id="emailAdmin_new"
                 onChange={emailChangeHandler}
                 type="email"
                 placeholder="Please enter a valid email here"
@@ -176,7 +173,6 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 className="input is-link"
-                id="passwordAdmin_new"
                 type="password"
                 name="pword"
                 required
@@ -196,7 +192,6 @@ export default function EmployeeForm(props) {
             <div className="control has-icons-left has-icons-right">
               <input
                 defaultValue={props.phone_number}
-                id="phoneNumberAdmin_new"
                 className="input is-link"
                 type="text"
                 placeholder="Please enter a phone number here"
@@ -217,7 +212,6 @@ export default function EmployeeForm(props) {
               <input
                 defaultValue={props.clock_Number}
                 className="input is-link"
-                id="clockInNumAdmin_new"
                 placeholder="Please enter a clock number here"
                 type="number"
                 onChange={clockNumberChangeHandler}
@@ -237,7 +231,6 @@ export default function EmployeeForm(props) {
                 <select
                   onChange={departmentChangeHandler}
                   defaultValue={"DEFAULT"}
-                  id="departmentAdmin_new"
                   name="department"
                 >
                   <option disabled value="DEFAULT">
@@ -259,7 +252,6 @@ export default function EmployeeForm(props) {
                 <select
                   onChange={is_managerChangeHandler}
                   defaultValue={props.is_manager}
-                  id="is_managerAdmin_new"
                   name="is_manager"
                 >
                   {" "}

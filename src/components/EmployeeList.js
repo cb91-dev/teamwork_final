@@ -16,7 +16,7 @@ export default function EmployeeList(props) {
 
   function deleteEmployee() {
     const Employee_Num = {
-      Employee_id: document.getElementById(this.props.id).value,
+      Employee_id: props.id,
     };
 
     var url = "http://localhost:8888/api/api.php?action=deleteEmployee";
@@ -37,12 +37,13 @@ export default function EmployeeList(props) {
     });
   }
 
-  function opener() {
+  var opener = () => {
     setActive(true);
-  }
-  function closer() {
+  };
+  var closer = () => {
     setActive(false);
-  }
+  };
+
   return (
     <div>
       <a className="is-flex is-justify-content-space-between panel-block is-active">
@@ -58,20 +59,17 @@ export default function EmployeeList(props) {
         <div className="button is-danger is-small" onClick={deleteEmployee}>
           Remove
         </div>
-        <input
-          hidden
-          onChange={employeeIdHandler}
-          id={props.id}
-          value={props.id}
-        />
       </a>
       <div className={`modal ${isActive ? "is-active" : ""}`}>
         <div className="modal-background"></div>
         <div className="modal-card">
-          <header className="modal-card-head">
-            <p className="modal-card-title">
-              {props.firstName + " " + props.lastName}
-            </p>
+          <header className="modal-card-head is-flex is-justify-content-space-between">
+            <div className="is-flex-direction-column ">
+              <p className="modal-card-title">
+                {props.firstName + " " + props.lastName}
+              </p>
+              <p>Employee update form</p>
+            </div>
             <button
               className="delete has-background-danger"
               onClick={closer}

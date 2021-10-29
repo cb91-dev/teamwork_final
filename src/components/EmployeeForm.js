@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 class EmployeeForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      employees_idNumber: this.props.employees_idNumber,
+      employees_idNumber: props.employees_idNumber,
       firstName: props.firstName,
       department: props.department,
       clock_Number: props.clock_Number,
@@ -15,6 +15,7 @@ class EmployeeForm extends React.Component {
       dateOfBirth: props.dateOfBirth,
       email: props.email,
       closer: props.closer,
+      showAlert: props.showAlert,
     };
 
     this.employeeIdHandler = this.employeeIdHandler.bind(this);
@@ -39,7 +40,6 @@ class EmployeeForm extends React.Component {
     this.setState({
       employees_idNumber: event.target.value,
     });
-    console.log(1);
   }
 
   firstNameUpdateChangeHandler(event) {
@@ -50,27 +50,25 @@ class EmployeeForm extends React.Component {
 
   lastNameUpdateChangeHandler(event) {
     this.setState({
-      lastName: event.target.lastName,
+      lastName: event.target.value,
     });
-    console.log(3);
   }
 
   dateUpdateChangeHandler(event) {
     this.setState({
-      dateOfBirth: event.target.dateOfBirth,
+      dateOfBirth: event.target.value,
     });
-    console.log(4);
   }
 
   emailUpdateChangeHandler(event) {
     this.setState({
-      email: event.target.email,
+      email: event.target.value,
     });
   }
 
   phoneNumberUpdateChangeHandler(event) {
     this.setState({
-      phone_number: event.target.phone_number,
+      phone_number: event.target.value,
     });
   }
 
@@ -93,6 +91,7 @@ class EmployeeForm extends React.Component {
   }
 
   updateMyDetailsViewForm(evt) {
+    let thisEmployeeForm = this;
     const updatedEmployeeData = {
       employees_idNumber: this.state.employees_idNumber,
       firstName: this.state.firstName,
@@ -113,20 +112,23 @@ class EmployeeForm extends React.Component {
       credentials: "include",
     }).then(function (headers) {
       if (headers.status === 201) {
-        // this.showAlert("success", "Employee added");
-        // this.closer();
+        thisEmployeeForm.state.showAlert("success", "Employee profile updated");
+        thisEmployeeForm.state.closer();
       }
       if (headers.status === 401) {
-        // this.showAlert("error", "This action didn't work");
-        // this.closer();
+        thisEmployeeForm.state.showAlert(
+          "error",
+          "Employee profile did not updated"
+        );
+        thisEmployeeForm.state.closer();
       }
       if (headers.status === 429) {
-        // this.showAlert("error", "This action didn't work");
-        // this.closer();
+        thisEmployeeForm.state.showAlert("error", "This action didn't work");
+        thisEmployeeForm.state.closer();
       }
       if (headers.status === 500) {
-        // this.showAlert("error", "This action didn't work");
-        // this.closer();
+        thisEmployeeForm.state.showAlert("error", "This action didn't work");
+        thisEmployeeForm.state.closer();
       }
     });
   }
@@ -140,7 +142,7 @@ class EmployeeForm extends React.Component {
               <label className="label">Employee Id</label>
               <div className="control has-icons-left has-icons-right">
                 <input
-                  defaultValue={this.employees_idNumber}
+                  defaultValue={this.props.employees_idNumber}
                   id={this.id}
                   name="employees_idNumber"
                   type="text"
@@ -155,7 +157,6 @@ class EmployeeForm extends React.Component {
                 <input
                   defaultValue={this.state.firstName}
                   onChange={this.firstNameUpdateChangeHandler}
-                  id="first_name_admin_view"
                   className="input is-link"
                   type="text"
                   placeholder="Employees first name"
@@ -175,7 +176,6 @@ class EmployeeForm extends React.Component {
                 <input
                   defaultValue={this.state.lastName}
                   onChange={this.lastNameUpdateChangeHandler}
-                  id="last_name_admin_view"
                   className="input is-link"
                   type="text"
                   placeholder="Employees last name"
@@ -194,7 +194,6 @@ class EmployeeForm extends React.Component {
                 <input
                   defaultValue={this.state.dateOfBirth}
                   onChange={this.dateUpdateChangeHandler}
-                  id="dataOfBirth_admin_view"
                   className="input is-link"
                   type="date"
                   name="DOB"
@@ -215,7 +214,6 @@ class EmployeeForm extends React.Component {
                   defaultValue={this.state.email}
                   onChange={this.emailUpdateChangeHandler}
                   className="input is-link"
-                  id="email_admin_view"
                   type="email"
                   name="email"
                   required
@@ -231,7 +229,6 @@ class EmployeeForm extends React.Component {
                 <input
                   defaultValue={this.state.phone_number}
                   onChange={this.phoneNumberUpdateChangeHandler}
-                  id="phone_number_admin_view"
                   className="input is-link"
                   type="number"
                   name="phone_number"
@@ -251,7 +248,6 @@ class EmployeeForm extends React.Component {
                   defaultValue={this.state.clock_Number}
                   onChange={this.clockNumberUpdateChangeHandler}
                   className="input is-link"
-                  id="clock_Number_admin_view"
                   type="number"
                   data-bouncer-message="Clock number needs to be 4 digits in length"
                   name="clockInNum"
@@ -270,7 +266,6 @@ class EmployeeForm extends React.Component {
                   <select
                     onChange={this.departmentUpdateChangeHandler}
                     defaultValue={this.state.department}
-                    id="department_admin_view"
                     name="department"
                   >
                     <option disabled value="DEFAULT">
@@ -292,7 +287,6 @@ class EmployeeForm extends React.Component {
                   <select
                     onChange={this.is_managerUpdateChangeHandler}
                     defaultValue={this.state.is_manager}
-                    id="manager_admin_view"
                     name="is_manager"
                   >
                     {" "}

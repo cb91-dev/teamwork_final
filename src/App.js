@@ -3,10 +3,6 @@ import Employee from "./components/Employee";
 import ScheduleMarker from "./components/ScheduleMaker";
 
 export default function App() {
-  function test(a, b) {
-    console.log(a, b);
-  }
-
   function showAlert(msgtype, msg) {
     document.getElementById("alertbox").removeAttribute("hidden");
     document.getElementById("alertmsg").innerHTML = msg;
@@ -37,7 +33,7 @@ export default function App() {
       <div
         className="notification mb-0"
         id="alertbox"
-        onClick="hideAlert()"
+        onClick={hideAlert}
         hidden
       >
         <button className="delete" id="alertclose"></button>
