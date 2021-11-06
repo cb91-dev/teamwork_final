@@ -7,11 +7,11 @@ class EmployeeForm extends React.Component {
     this.state = {
       employees_idNumber: props.employees_idNumber,
       firstName: props.firstName,
+      lastName: props.lastName,
       department: props.department,
       clock_Number: props.clock_Number,
       phone_number: props.phone_number,
       is_manager: props.is_manager,
-      lastName: props.lastName,
       dateOfBirth: props.dateOfBirth,
       email: props.email,
       closer: props.closer,
@@ -133,6 +133,7 @@ class EmployeeForm extends React.Component {
   }
 
   render() {
+    // console.log(this.props.employees_idNumber);
     return (
       <div>
         <section className="modal-card-body">

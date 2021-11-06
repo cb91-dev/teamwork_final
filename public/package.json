@@ -15,5 +15,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "dependencies": {}
+  "dependencies": {
+    "fullcalendar": "^5.10.0"
+  }
 }

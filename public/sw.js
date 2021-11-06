@@ -18,14 +18,15 @@
 // var CACHE_NAME = "my-site-cache-v1";
 // var urlsToCache = [
 //   "/",
+//   "index.html",
 //   "logo-img/logo.svg",
-//   "../TeamWork/",
 //   "css/dark.css",
 //   "css/light.css",
 //   "css/error.css",
 //   "css/mystyle.css",
 //   "sw.js",
 //   "js/main.js",
+//   "manifest.json",
 // ];
 
 // self.addEventListener("install", function (event) {

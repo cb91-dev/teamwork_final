@@ -14,7 +14,7 @@ export default function EmployeeList(props) {
     employeeIdHandler();
   };
 
-  function deleteEmployee() {
+  function deleteEmployee(id) {
     const Employee_Num = {
       Employee_id: props.id,
     };
@@ -56,7 +56,11 @@ export default function EmployeeList(props) {
             value={props.title + " " + props.lastName}
           />
         </div>
-        <div className="button is-danger is-small" onClick={deleteEmployee}>
+        <div
+          className="button is-danger is-small"
+          id={props.id}
+          onClick={deleteEmployee}
+        >
           Remove
         </div>
       </a>

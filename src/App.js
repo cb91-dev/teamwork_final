@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Employee from "./components/Employee";
 import ScheduleMaker from "./components/ScheduleMaker";
 
-export default function App() {
+export default function App(props) {
+  const [userData, setEmployeeData] = useState({});
+  function parentCallBacksendUsersData(userData) {
+    setEmployeeData(userData);
+  }
+
   function showAlert(msgtype, msg) {
     document.getElementById("alertbox").removeAttribute("hidden");
     document.getElementById("alertmsg").innerHTML = msg;
@@ -27,9 +32,11 @@ export default function App() {
   function hideAlert() {
     document.getElementById("alertbox").setAttribute("hidden", "hidden");
   }
+
   return (
     <div>
       {" "}
+      {/* THIS IS OUR ERROR DISPLAY */}
       <div
         className="notification mb-0"
         id="alertbox"
@@ -52,12 +59,11 @@ export default function App() {
       <div className="hidden" id="loader-theme">
         <div className="loader"></div>
       </div>
-      <h1 className="has-text-white has-text-centered is-size-4 pt-2">
-        {" "}
-        Admin
-      </h1>
-      <Employee showAlert={showAlert} />
-      <ScheduleMaker showAlert={showAlert} />
+      <Employee
+        parentCallBacksendUsersData={parentCallBacksendUsersData}
+        showAlert={showAlert}
+      />
+      <ScheduleMaker user={userData} showAlert={showAlert} />
     </div>
   );
 }

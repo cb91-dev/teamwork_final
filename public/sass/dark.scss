@@ -40,6 +40,8 @@ $widescreen-enabled: false;
 $fullhd-enabled: false;
 
 // Import only what you need from Bulma
+// Import Bulma core
+
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/elements/button.sass";
@@ -57,6 +59,25 @@ $back-ground-main: #000000;
 $back-ground-lg: linear-gradient(315deg, #000000 0%, #414141 74%);
 $backspace: #dd0404;
 
+$calendar-border: 0.1rem solid $white-ter !default;
+$calendar-border-radius: $radius-small !default;
+$calendar-selection-background-color: $link !default;
+$calendar-days-background-color: transparent !default;
+$calendar-selection-days-color: $grey-light !default;
+$calendar-date-color: $text !default;
+$calendar-date-hover-background-color: $white !default;
+$calendar-date-hover-border: 0.1rem solid $link !default;
+$calendar-date-hover-border: $primary !default;
+$calendar-date-highlighted-border: 0.1rem solid $link !default;
+$calendar-today-background: transparent !default;
+$calendar-today-border: 0.1rem dotted $link !default;
+$calendar-today-color: $link !default;
+$calendar-range-background-color: $link !default;
+$calendar-body-padding: 0 !default;
+$calendar-selection-padding: 0.3rem 0 !default;
+$calendar-selection-nav-padding: 0.5em !default;
+$calendar-date-padding: 0.1rem 0 !default;
+
 body {
   overflow: hidden;
   box-sizing: border-box;
@@ -66,6 +87,9 @@ body {
   font-family: "Arvo";
   background-color: $back-ground-lg;
   overscroll-behavior: none;
+}
+#calendar {
+  background-color: white;
 }
 
 input.myClass:disabled {

@@ -37,6 +37,7 @@ $widescreen-enabled: false;
 $fullhd-enabled: false;
 
 // Import only what you need from Bulma
+
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/elements/button.sass";
@@ -64,7 +65,9 @@ body {
   background-color: $back-ground-lg;
   overscroll-behavior: none;
 }
-
+#calendar {
+  background-color: white;
+}
 input.myClass:disabled {
   background-color: white;
 }

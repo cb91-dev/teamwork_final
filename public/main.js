@@ -19,7 +19,7 @@ if (localStorage.getItem("Logged_In_Status", "True")) {
   showAlert("error", "Please log in");
   document.getElementById("TeamWork_APP_logged_in").classList.add("hidden");
 }
-// const url = "http://localhost:8888/stage2";
+
 ///----------------- THEME----------------------
 var stylesheet = document.getElementById("stylesheet");
 function onloadtheme() {
@@ -37,6 +37,26 @@ function setStyleSheet(url) {
   document.getElementById("loader-theme").classList.add("hidden");
   localStorage.setItem("DarkModeStatus", url);
 }
+
+// // Initialize all input of date type.
+// const calendars = bulmaCalendar.attach('[type="date"]', options);
+
+// // Loop on each calendar initialized
+// calendars.forEach((calendar) => {
+//   // Add listener to select event
+//   calendar.on("select", (date) => {
+//     console.log(date);
+//   });
+// });
+
+// // To access to bulmaCalendar instance of an element
+// const element = document.querySelector("#my-element");
+// if (element) {
+//   // bulmaCalendar instance is available as element.bulmaCalendar
+//   element.bulmaCalendar.on("select", (datepicker) => {
+//     console.log(datepicker.data.value());
+//   });
+// }
 
 ///----------------------- CLOCK IN FETCH-----------------
 function hello() {
@@ -58,11 +78,9 @@ function punchClock() {
   ).then(function (headers) {
     if (headers.status === 201) {
       showAlert("success", "You have clocked in");
-      console.log(1);
     }
     if (headers.status === 202) {
       showAlert("success", "You have clocked out");
-      console.log(2);
     }
     if (headers.status === 204) {
       showAlert("warning", "You are not currently clocked on");
@@ -715,10 +733,9 @@ function checkMyAvailabilities() {
   viewMyAvail();
 }
 
-let myJSON;
-
 function viewMyAvail() {
   hideAlert();
+  let myJSON;
   // var url = "http://localhost:8888/api/api.php";
   document.getElementById("loader").classList.remove("hidden");
   fetch(url + "?action=viewMyAvail", { credentials: "include" })

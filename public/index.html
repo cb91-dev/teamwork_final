@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- method="POST" action="http://localhost:8888/api/api.php?action=login" -->
 
 <head>
     <meta charset="utf-8">
@@ -10,17 +9,23 @@
     <title>Team work</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" id="stylesheet" href="css/mystyle.css">
-    <link rel="stylesheet" href="css/error.css">
+    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" sizes="32x32" href="logo-img/favicon-32x32.ico">
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <script src="sw.js"></script>
+    <link href='node_modules/fullcalendar/main.css' rel='stylesheet' />
+    <script src='node_modules/fullcalendar/main.js'></script>
+    <link rel="icon" href="PUBLIC_URL/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Web site created using create-react-app" />
     <link rel="shortcut icon" href="logo-img/favicon-32x32.ico">
     <link rel="icon" type="image/jpg" href="./logo-img/teamworklogo.jpg">
     <script src="https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.0/dist/bouncer.polyfills.min.js"></script>
-    <script src="main.js" type="text/javascript" defer></script>
+    <script src="main.js" defer></script>
+    <script src="cal.js" defer></script>
+    <link rel="stylesheet" id="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/error.css">
+
 </head>
 
 
@@ -36,8 +41,8 @@
                         <h2 class="my-6 has-text-centered has-text-white is-size-4 ">Team work makes the dream work
                         </h2>
                     </div>
-                    <div class="columns is-centered" id="login_box">
-                        <div class="column is-4">
+                    <div class=" is-centered" id="login_box">
+                        <div class="is-4">
                             <div class="box border">
                                 <form id="login_form" onSubmit=login(event)>
                                     <div class="field">
@@ -77,54 +82,88 @@
                             <form method="POST" onsubmit="register(event)" id="register">
                                 <div class="field">
                                     <label>First Name</label>
-                                    <input type="text" class="input is-link" name="firstName" required
-                                        pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+">
-                                    <label>Last Name</label>
-                                    <input type="text" class="input is-link" name="lastName" required
-                                        pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+">
-                                    <label>Email</label>
-                                    <div class="control has-icons-left has-icons-right">
-                                        <input class="input is-link" type="email" placeholder="john@example.com"
-                                            name="email" required>
+                                    <div class="control has-icons-left">
+                                        <input type="text" class="input is-link" name="firstName" required
+                                            pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+">
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <span class="icon is-small is-right">
-                                            <i class="fas fa-check"></i>
+                                    </div>
+                                    <label>Last Name</label>
+                                    <div class="control has-icons-left">
+                                        <input type="text" class="input is-link" name="lastName" required
+                                            pattern="\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <label>Email</label>
+                                    <div class="control has-icons-left">
+                                        <input class="input is-link" type="email" name="email" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
                                         </span>
                                     </div>
                                     <label>Phone Number:</label>
-                                    <!-- Phone number be in 555-555-5555 format -->
-                                    <input type="text" id="tel" class="input is-link" name="phone_number"
-                                        pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
-                                        data-bouncer-message="Please use only Australian domestic numbers" required>
+                                    <div class="control has-icons-left">
+                                        <!-- Phone number be in 555-555-5555 format -->
+                                        <input type="text" id="tel" class="input is-link" name="phone_number"
+                                            pattern="^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{2}( |-){0,1}[0-9]{1}( |-){0,1}[0-9]{3}$"
+                                            data-bouncer-message="Please use only Australian domestic numbers" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-phone"></i>
+                                        </span>
+                                    </div>
+
                                     <label>Clock On Number</label>
-                                    <input type="number"
-                                        data-bouncer-message="Clock number needs to be 4 digits in length"
-                                        class="input is-link" name="clockInNum" required>
+                                    <div class="control has-icons-left">
+                                        <input type="number"
+                                            data-bouncer-message="Clock number needs to be 4 digits in length"
+                                            class="input is-link" name="clockInNum" required>
+
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-history symbol"></i>
+                                        </span>
+                                    </div>
                                     <label> Password</label>
-                                    <input type="password" class="input is-link" name="pword" required
-                                        data-bouncer-message="Password must contain a min of 6 characters long with one upper case chartcter and at least one digit"
-                                        pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$">
+                                    <div class="control has-icons-left">
+                                        <input type="password" class="input is-link" name="pword" required
+                                            data-bouncer-message="Password must contain a min of 6 characters long with one upper case chartcter and at least one digit"
+                                            pattern="((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-unlock-alt"></i>
+                                        </span>
+                                    </div>
                                     <label class="py-2">Date of birth:</label>
                                     <input class="py-2 input is-link" type="date" name="DOB" value="2018-07-22"
                                         min="1970-01-01" max="2021-12-31"
                                         data-bouncer-message="Valid date range is from 1960 till current" required>
                                     <div class="is-flex is-flex-direction-column">
-                                        <label for="department">Department:</label>
-                                        <select id="department" name="department" form="register" required>
-                                            <option disabled selected value> -- select a department -- </option>
-                                            <option value="Front_Counter">Front Counter</option>
-                                            <option value="Fresh_Produce">Fresh Produce</option>
-                                            <option value="Bakery">Bakery</option>
-                                            <option value="Deli">Deli</option>
-                                        </select>
+                                        <div class="field">
+                                            <label for="department">Department:</label>
+                                            <div class="control is-link">
+                                                <div class="select is-link">
+                                                    <select id="department"
+                                                        data-bouncer-message="Please select one from the list below"
+                                                        required name="department">
+                                                        <option disabled selected value> -- select a department --
+                                                        </option>
+                                                        <option value="Front_Counter">Front Counter</option>
+                                                        <option value="Fresh_Produce">Fresh Produce</option>
+                                                        <option value="Bakery">Bakery</option>
+                                                        <option value="Deli">Deli</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                     <div class="is-flex is-flex-direction-column">
                                     </div>
                                 </div>
                             </form>
-                            <div class="is-flex is-justify-content-space-between p-3">
+                            <div class="pt-4 is-flex is-justify-content-space-between p-3">
                                 <button onclick="back_to_login_btn()"
                                     class="has-text-white button m-1 is-rounded is-link">Back</button>
                                 <button type="submit" form="register"
@@ -435,7 +474,7 @@
                 <h2 class="has-text-white has-text-centered is-size-5 py-4">Live Clock</h2>
                 <div class="py-2"></div>
                 <span class="is-flex is-justify-content-center has-text-white is-size-4" id="live_Clock"></span>
-                <button onclick="display_last_punch()"></button>
+                <!-- <button onclick="display_last_punch()"></button> -->
                 <span class="py-5 is-flex is-justify-content-center has-text-white is-size-4"
                     id="display_last_punch"></span>
                 <div class="py-2"></div>
@@ -524,7 +563,7 @@
                     </div>
                     <input form="viewMyDetails_form" class="button is-link is-small" type="button" name="Refresh"
                         value="Refresh" onclick="viewMyDetails(event)">
-                    <div class="detail_tab" id="update_tab2">
+                    <div class="detail_tab" id="update_tab1">
                         <h2 class="is-size-4 label has-text-weight-bold pt-4">Staff Details</h2>
                         <form method="POST" class="pt-3 pb-5 is-flex is-flex-direction-column" id="viewMyDetails_form"
                             action="http:/localhost:8888/api/api.php?action=viewMyDetails">
@@ -554,9 +593,9 @@
                                 placeholder="phone_number" class="pb-2">
                         </form>
 
-                        <!-- action="http://localhost:8888/api/api.php?action=upDateMyDetails" -->
+
                     </div>
-                    <div id="update_tab1" class="detail_tab hidden">
+                    <div id="update_tab2" class="detail_tab hidden">
                         <h2 class="has-text-weight-bold">Staff Details</h2>
                         <form method="POST" id="updateMyDetailsForm"
                             action="http://localhost:8888/api/api.php?action=upDateMyDetails"
@@ -600,8 +639,8 @@
                         <div class="is-flex is-flex-direction-column">
                             <div>
                                 <p>Colour Mode</p>
-                                <a onclick="setStyleSheet('css/light.css')">Light Mode</a>
-                                <a onclick="setStyleSheet('css/dark.css')">Dark Mode</a>
+                                <a onclick="setStyleSheet('/css/light.css')">Light Mode</a>
+                                <a onclick="setStyleSheet('/css/dark.css')">Dark Mode</a>
                             </div>
                             <form class="field">
                                 <div class="is-flex">
@@ -629,131 +668,9 @@
         <!--Schedule-->
         <section>
             <div id="menu4" class="page">
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Monday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
-                </div>
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Tuesday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
-                </div>
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Wednesday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
-                </div>
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Thursday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
-                </div>
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Friday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
-                </div>
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Saturday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
-                </div>
-                <div class="py-4"></div>
-                <div class="box">
-                    <h2 class="has-text-centered">Sunday</h2>
-                    <div class="is-flex">
-                        <div class="is-flex is-flex-direction-column is-align-items-flex-end">
-                            <label>Date:</label>
-                            <label class="pt-1">Department:</label>
-                            <label class="pt-1">Start time:</label>
-                            <label class="pt-1">Finish time:</label>
-                        </div>
-                        <div class="is-flex is-flex-direction-column">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                            <input readonly class="is-size-6" type="text" placeholder="hello">
-                        </div>
-                    </div>
+                <div class="py-6"></div>
+                <div>
+                    <div id='calendar' className="has-background-white"></div>
                 </div>
             </div>
         </section>

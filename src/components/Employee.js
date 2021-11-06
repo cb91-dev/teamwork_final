@@ -8,26 +8,35 @@ export default function Employee(props) {
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState(null);
 
-  function viewListOfEmployees() {
-    var url = "http://localhost:8888/api/api.php?action=viewAllEmployees";
-    fetch(url, { credentials: "include" })
-      .then((response) => {
-        if (response.ok) {
-          props.showAlert("success", "Here is a list of current employees");
-          return response.json();
-        }
-      })
-      .then((res) => {
-        setDataEmployee(res);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        seterror(error);
-      })
-      .finally(() => {
-        setloading(false);
-      });
+  function sendUsersData(res) {
+    props.parentCallBacksendUsersData(res);
   }
+  const [employeeList, setEmployeeList] = useState([]);
+
+  useEffect(() => {
+    function viewListOfEmployees() {
+      var url = "http://localhost:8888/api/api.php?action=viewAllEmployees";
+      fetch(url, { credentials: "include" })
+        .then((response) => {
+          if (response.ok) {
+            props.showAlert("success", "Here is a list of current employees");
+            return response.json();
+          }
+        })
+        .then((res) => {
+          setDataEmployee(res);
+          sendUsersData(res);
+        })
+        .catch((error) => {
+          console.error("Error fetching data: ", error);
+          seterror(error);
+        })
+        .finally(() => {
+          setloading(false);
+        });
+    }
+    viewListOfEmployees();
+  }, [setEmployeeList]);
 
   const [hidden, setHidden] = useState(false);
   const ToggleClass = () => {
@@ -45,12 +54,8 @@ export default function Employee(props) {
   return (
     <div>
       <article className="panel is-link my-4 has-background-white">
-        <p
-          onClick={viewListOfEmployees}
-          className="panel-heading has-background-link"
-        >
-          Current Employees
-        </p>
+        <p className="panel-heading has-background-link">Current Employees</p>
+
         <div className="panel-block is-flex is-flex-direction-column">
           <p className="pb-2 control has-icons-left">
             <input className="input is-link" type="text" placeholder="Search" />

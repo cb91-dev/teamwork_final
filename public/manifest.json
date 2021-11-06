@@ -2,6 +2,7 @@
   "manifest_version": "3",
   "short_name": "TW",
   "name": "Team Work",
+  "description": "Clock on application",
   "icons": [
     {
       "src": "logo-img/favicon-16x16.ico",
@@ -24,7 +25,7 @@
       "sizes": "506x275"
     }
   ],
-  "start_url": "http://localhost:8888/TeamWork/",
+  "start_url": "localhost",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
