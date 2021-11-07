@@ -11,7 +11,6 @@ export default function Employee(props) {
   function sendUsersData(res) {
     props.parentCallBacksendUsersData(res);
   }
-  const [employeeList, setEmployeeList] = useState([]);
 
   useEffect(() => {
     function viewListOfEmployees() {
@@ -36,7 +35,7 @@ export default function Employee(props) {
         });
     }
     viewListOfEmployees();
-  }, [setEmployeeList]);
+  }, [setDataEmployee]);
 
   const [hidden, setHidden] = useState(false);
   const ToggleClass = () => {

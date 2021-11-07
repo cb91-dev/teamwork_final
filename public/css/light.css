@@ -8,6 +8,12 @@
   border-color: red;
 }
 
+.scheduleDateInputsParent > .scheduleInputs {
+  border: 1px solid #785ceb;
+  border-radius: 5px;
+  padding: 10px;
+}
+
 .error-message {
   color: red;
   font-style: italic;

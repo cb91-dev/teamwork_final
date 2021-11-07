@@ -6,6 +6,12 @@ export default function ScheduleMaker(props) {
   const [modalShow, setModalShow] = useState(false);
   const [dateClicked, setDateClicked] = useState([]);
   const [info, setInfo] = useState([]);
+  const [renderData, setRenderData] = useState([]);
+
+  function parentCallBackSendRenderData(renderData) {
+    setRenderData(renderData);
+    console.log(renderData);
+  }
   function parentCallBackdateClicked(dateClicked) {
     setDateClicked(dateClicked);
     setModalShow(true);
@@ -28,7 +34,10 @@ export default function ScheduleMaker(props) {
           ScheduleMaker
         </p>
         <div className="panel has-background-white">
-          <ScheduleMakerCalendar dateClicked={parentCallBackdateClicked} />
+          <ScheduleMakerCalendar
+            renderData={renderData}
+            dateClicked={parentCallBackdateClicked}
+          />
         </div>
       </article>
       <div className={`modal ${modalShow ? "is-active" : null}`}>
@@ -45,6 +54,7 @@ export default function ScheduleMaker(props) {
           <section className="modal-card-body">
             {" "}
             <ScheduleMakerForm
+              parentCallBackSendRenderData={parentCallBackSendRenderData}
               dateClicked={dateClicked}
               usersInfo={props.user}
               modalShow={modalShow}
