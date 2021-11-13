@@ -29,11 +29,9 @@ export default function ScheduleMakerForm(props) {
     );
     setscheduleData([]);
   };
-  // // // Local host/local development
-  const url = "http://localhost:8888/api/api.php";
 
   // // Hosting URL
-  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
   function createNewShift(evt) {
     const newShift = {
@@ -53,6 +51,7 @@ export default function ScheduleMakerForm(props) {
         props.closer();
         sendRenderData(response);
         handleReset();
+        localStorage.setItem("Admin", "ok");
       }
       if (response.status === 401) {
         props.showAlert("error", "This action didn't work");

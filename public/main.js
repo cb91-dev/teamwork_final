@@ -1,22 +1,10 @@
-/// Url's
-
-// // Local host/local development
-const url = "http://localhost:8888/api/api.php";
-
 // // Hosting URL
-// const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
 //----------------- LOGIN FETCH-------------------------
 
-function test(evt) {
-  evt.preventDefault();
-  console.log(2);
-  console.log(evt);
-}
-
 function login(evt) {
   evt.preventDefault();
-  console.log(1);
   document.getElementById("loader").classList.remove("hidden");
   var loginData = new FormData();
   loginData.append(evt.target[0].name, evt.target[0].value);
@@ -37,13 +25,15 @@ function login(evt) {
       setTimeout(function () {
         viewMySchedule();
       }, 5100);
-      clearRegister("login_form");
       document.getElementById("TeamWork_APP_login").classList.add("hidden");
       showAlert("success", "You have logged in");
       document.getElementById("loader").classList.add("hidden");
+      document.getElementById("menu5").classList.add("hidden");
+      document.getElementById("menu5-btn").classList.add("hidden");
       document
         .getElementById("TeamWork_APP_logged_in")
         .classList.remove("hidden");
+      document.getElementById("menu1").classList.remove("hidden");
     }
     if (res.status === 307) {
       hideAlert();
@@ -56,6 +46,7 @@ function login(evt) {
       setTimeout(function () {
         viewMySchedule();
       }, 5100);
+
       document.getElementById("TeamWork_APP_login").classList.add("hidden");
       showAlert("success", "You have logged in");
       document.getElementById("loader").classList.add("hidden");
@@ -63,6 +54,8 @@ function login(evt) {
         .getElementById("TeamWork_APP_logged_in")
         .classList.remove("hidden");
       localStorage.setItem("Admin", "ok");
+      document.getElementsById("menu5").classList.remove("hidden");
+      document.getElementsById("menu5-btn").classList.remove("hidden");
     }
     if (res.status === 401) {
       showLoginAlert(
@@ -249,18 +242,9 @@ function register(evt) {
       document.getElementById("login_box").classList.remove("hidden");
       showLoginAlert("success", "Welcome to the party now login");
       clearRegister("login_form");
-      document
-        .getElementById("menu5-btn")
-        .setAttribute("style", "display:none");
-      document.getElementById("menu5").setAttribute("style", "display:none");
-      clearRegister("register_form");
     }
     if (headers.status === 200) {
       showLoginAlert("Error", "Try another email please");
-      document
-        .getElementById("menu5-btn")
-        .setAttribute("style", "display:none");
-      document.getElementById("menu5").setAttribute("style", "display:none");
     }
     if (headers.status === 401) {
       showLoginAlert(
@@ -298,7 +282,7 @@ function formattedSchedule(res) {
     const formattedSchedule = {
       employees_idNumber: res[i].employees_idNumber,
       department: res[i].Department,
-      starTime: res[i].startDate_Time,
+      startTime: res[i].startDate_Time,
       finishTime: res[i].finishDate_Time,
       shiftMsg: res[i].ShiftMsg,
       shiftid: res[i].schedule_id,
@@ -309,8 +293,12 @@ function formattedSchedule(res) {
 }
 
 function renderScheduleList(res) {
-  var date = res.starTime;
+  var date = res.startTime;
   var readable_date = new Date(date).toDateString();
+  let startTime = res.startTime;
+  let finishTime = res.finishTime;
+  let sT = startTime.substr(11, 5);
+  let fT = finishTime.substr(11, 5);
 
   // Save the current contents of #ShiftList
   let inner = document.getElementById("shiftList").innerHTML;
@@ -326,9 +314,9 @@ ${readable_date}<i class="fas fa-chevron-down"></i>
   Department:
   ${res.department}<br>
   Start Time:
-  ${res.starTime}<br>
+  ${sT}<br>
   Finish Time:
-  ${res.finishTime}<br>
+  ${fT}<br>
   Shift Team Message:
   ${res.shiftMsg}<br>
 
@@ -341,12 +329,10 @@ ${readable_date}<i class="fas fa-chevron-down"></i>
 }
 function OpenShiftView(evt, shiftID) {
   let a = document.getElementById(shiftID); //evt.target;
-  console.log(a);
   a.classList.remove("hidden");
 }
 function CloseShiftView(evt) {
   let a = evt.target.parentNode.parentNode;
-  console.log(a);
   a.classList.add("hidden");
 }
 
@@ -360,6 +346,7 @@ function hide_main_app() {
     if (headers.status === 202) {
       document.getElementById("TeamWork_APP_login").classList.add("hidden");
       showAlert("success", "Welcome Back");
+
       document
         .getElementById("TeamWork_APP_logged_in")
         .classList.remove("hidden");
@@ -398,6 +385,7 @@ function logOut(evt) {
   }).then(function (headers) {
     if (headers.status === 202) {
       localStorage.setItem("Admin", "no");
+
       document.getElementById("TeamWork_APP_login").classList.remove("hidden");
       showAlert("success", "You have logged out");
       document.getElementById("TeamWork_APP_logged_in").classList.add("hidden");
@@ -410,7 +398,6 @@ function logOut(evt) {
 }
 // / login Errors box
 function showLoginAlert(msgtype, msg) {
-  console.log(msgtype, msg);
   document.getElementById("alertLogin").removeAttribute("hidden");
   document.getElementById("alertMsgLogin").innerHTML = msg;
   window.setTimeout(function () {
@@ -532,7 +519,6 @@ function updateMyDetailsViewForm() {
           document.getElementById("update_clock_Number").value =
             data.clock_Number;
           document.getElementById("loader").classList.add("hidden");
-          showAlert("success", "good");
         });
         if (response.status === 400) {
           showAlert("error", "Error loading those results");
@@ -945,7 +931,6 @@ function viewMyAvail() {
       }
     })
     .catch(function (err) {
-      console.log("connection unav");
       console.log(err);
       document.getElementById("loader").classList.add("hidden");
     });
@@ -1033,47 +1018,16 @@ document.addEventListener("DOMContentLoaded", () => {
 function toggleVisibility(e) {
   document.getElementById("navHambuger").classList.toggle("is-active");
   document.getElementById("navbarBasicExample").classList.toggle("is-active");
-  if (localStorage.getItem("page")) {
-    var prevMenu = localStorage.getItem("page") + "-btn";
-  }
-  localStorage.setItem("page", e);
-  var menuBtn = e + "-btn";
-  function toggleVisibility(e) {
-    if (localStorage.getItem("page")) {
-      var prevMenu = localStorage.getItem("page") + "-btn";
-    }
-    localStorage.setItem("page", e);
-    var menuBtn = e + "-btn";
-    var pages = Array.from(document.getElementsByClassName("page"));
-    pages.forEach(function (element) {
-      if (element === document.getElementById(e)) {
-        element.style.display = "block";
-      } else {
-        element.style.display = "none";
-      }
-    });
-  }
-
-  if (localStorage.getItem("page")) {
-    toggleVisibility(localStorage.getItem("page"));
-  } else {
-    toggleVisibility("menu1");
-  }
   var pages = Array.from(document.getElementsByClassName("page"));
   pages.forEach(function (element) {
     if (element === document.getElementById(e)) {
-      element.style.display = "block";
+      element.classList.remove("hidden");
     } else {
-      element.style.display = "none";
+      element.classList.add("hidden");
     }
   });
 }
 
-if (localStorage.getItem("page")) {
-  toggleVisibility(localStorage.getItem("page"));
-} else {
-  toggleVisibility("menu1");
-}
 //---------------------- View Detials sub page
 
 function toggle_update(x) {

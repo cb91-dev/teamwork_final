@@ -32,7 +32,12 @@
   z-index: 1;
   position: fixed;
 }
-
+.fc-scrollgrid-section-liquid {
+  height: 1px !important;
+}
+.fc-time-area col {
+  min-width: 2.2em;
+}
 @import "../node_modules/bulma/bulma.sass";
 // Import a Google Font
 @import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");

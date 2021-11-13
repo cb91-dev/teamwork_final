@@ -18,15 +18,17 @@ export default function EmployeeList(props) {
     const Employee_Num = {
       Employee_id: props.id,
     };
+    // // Hosting URL
+    const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
-    var url = "http://localhost:8888/api/api.php?action=deleteEmployee";
-    fetch(url, {
+    fetch(url + "?action=deleteEmployee", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(Employee_Num),
     }).then(function (response) {
       if (response.status === 202) {
         props.showAlert("success", "Employee removed");
+        props.callEmployee();
       }
       if (response.status === 401) {
         props.showAlert("error", "This action didn't work");

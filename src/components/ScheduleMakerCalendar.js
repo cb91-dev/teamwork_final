@@ -10,12 +10,17 @@ export default function ScheduleMakerCalendar(props) {
     props.dateClicked(evt);
   };
 
-  // // // Local host/local development
-  const url = "http://localhost:8888/api/api.php";
-
   // // Hosting URL
-  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
   useEffect(() => {
+    setInterval(function () {
+      if (localStorage.getItem("Admin") === "ok") {
+        viewFullSchedule();
+        localStorage.setItem("Admin", "no");
+      }
+    }, 1600);
+  });
+  function viewFullSchedule() {
     fetch(url + "?action=viewFullSchedule", { credentials: "include" })
       .then((response) => {
         if (response.ok) {
@@ -33,7 +38,7 @@ export default function ScheduleMakerCalendar(props) {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
+  }
   return (
     <div>
       <FullCalendar

@@ -18,7 +18,7 @@
     <meta name="description" content="Web site created using create-react-app" />
     <link rel="shortcut icon" href="logo-img/favicon-32x32.ico">
     <link rel="icon" type="image/jpg" href="./logo-img/teamworklogo.jpg">
-    <!-- <script src="https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.0.0/dist/bouncer.polyfills.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.0.0/dist/bouncer.polyfills.min.js"></script>
     <script src="main.js" defer></script>
     <link rel="stylesheet" id="stylesheet" href="css/dark.css">
     <link rel="stylesheet" href="css/error.css">
@@ -28,10 +28,9 @@
 </head>
 
 
-<!-- myServiceGuy(); -->
 
 
-<body onload=hide_main_app();onloadtheme();>
+<body onload=hide_main_app();onloadtheme();myServiceGuy();>
     <div class="notification mb-0" hidden id="alertLogin">
         <button class="delete" onclick="hideLoginAlert()">
         </button>
@@ -161,8 +160,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                     <div class="is-flex is-flex-direction-column">
                                     </div>
@@ -254,7 +251,7 @@
         </div>
         <!--Availabilities-->
         <section>
-            <div id="menu1" class="page has-text-white has-text-centered">
+            <div id="menu1" class="page has-text-white has-text-centered hidden">
                 <div class="py-2 border-top"></div>
                 Availabilities
                 <div class="container px-3" id="hello">
@@ -473,7 +470,7 @@
         </section>
         <!--LIVE CLOCK-->
         <section>
-            <div id="menu2" class="pb-5 page">
+            <div id="menu2" class="pb-5 page hidden">
                 <div class="py-2 border-top"></div>
                 <h2 class="has-text-white has-text-centered is-size-5 py-4">Live Clock</h2>
                 <div class="py-2"></div>
@@ -539,7 +536,7 @@
         </section>
         <!--My Details-->
         <section>
-            <div id="menu3" class="page has-text-white ">
+            <div id="menu3" class="page has-text-white hidden ">
                 <div class="py-2 border-top"></div>
                 <h2 class="has-text-white has-text-centered is-size-5 py-4">My Details</h2>
                 <div class='py-4'></div>
@@ -667,7 +664,7 @@
         </section>
         <!--Schedule-->
         <section>
-            <div id="menu4" class="page">
+            <div id="menu4" class="page hidden">
                 <div class="py-6"></div>
                 <article class="panel has-background-white is-link">
                     <p class="panel-heading is-link" onclick="viewMySchedule()">
@@ -682,12 +679,14 @@
                 <div class="py-6"></div>
             </div>
         </section>
-        <section id="menu5" class="page"></section>
+
+        <div id="menu5" class="page"></div>
+
     </div>
     <footer id="end"></footer>
 
 </body>
-<!-- <script>
+<script>
     var validate = new Bouncer('form', {
 
         // Classes & IDs
@@ -743,12 +742,12 @@
         },
 
         // Form Submission
-        disableSubmit: false, // If true, native form submission is suppressed even when form validates
+        disableSubmit: true, // If true, native form submission is suppressed even when form validates
 
         // Custom Events
         emitEvents: true // If true, emits custom events
 
-    }); 
-</script>-->
+    });
+</script>
 
 </html>

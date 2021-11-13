@@ -82,7 +82,7 @@ yarn add bulma
 
 ### `Full Calendar`
 
-v5.10
+v5.10.0
 yarn add --save @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction
 
     Full Calendar is only visible to those user assigned the additional role of manager. Full Calendar can be found in the admin link from menu, this plugin was used to give mananger a clear view of rostered on staff for each day.

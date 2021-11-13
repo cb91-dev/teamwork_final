@@ -10,33 +10,32 @@ export default function Employee(props) {
     props.parentCallBacksendUsersData(res);
   }
 
-  // // // Local host/local development
-  const url = "http://localhost:8888/api/api.php";
-
   // // Hosting URL
-  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
   useEffect(() => {
     setInterval(function () {
       if (localStorage.getItem("Admin") === "ok") {
-        fetch(url + "?action=viewAllEmployees", { credentials: "include" })
-          .then((response) => {
-            if (response.ok) {
-              props.showAlert("success", "Here is a list of current employees");
-              return response.json();
-            }
-          })
-          .then((res) => {
-            setDataEmployee(res);
-            sendUsersData(res);
-          })
-          .catch((error) => {
-            console.error("Error fetching data: ", error);
-          });
-        localStorage.setItem("Admin", "no");
+        callEmployee();
       }
-    }, 3000);
+    }, 1400);
   });
+  function callEmployee() {
+    fetch(url + "?action=viewAllEmployees", { credentials: "include" })
+      .then((response) => {
+        if (response.ok) {
+          props.showAlert("success", "Here is a list of current employees");
+          return response.json();
+        }
+      })
+      .then((res) => {
+        setDataEmployee(res);
+        sendUsersData(res);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }
 
   const [isActive, setActive] = useState(false);
 
@@ -72,6 +71,7 @@ export default function Employee(props) {
             department={dataEmployee.department}
             dateOfBirth={dataEmployee.DOB}
             showAlert={props.showAlert}
+            callEmployee={callEmployee}
           />
         ))}
       </article>

@@ -103,11 +103,9 @@ class EmployeeForm extends React.Component {
       DOB: this.state.dateOfBirth,
       email: this.state.email,
     };
-    // // // Local host/local development
-    const url = "http://localhost:8888/api/api.php";
 
     // // Hosting URL
-    // const url = "https://bennettdesigns.dev/teamWork/api/api.php";
+    const url = "https://bennettdesigns.dev/teamWork/api/api.php";
     evt.preventDefault(evt);
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
@@ -119,7 +117,6 @@ class EmployeeForm extends React.Component {
       if (response.status === 201) {
         thisEmployeeForm.state.showAlert("success", "Employee profile updated");
         thisEmployeeForm.state.closer();
-        // thisEmployeeForm.state.newResults()
       }
       if (response.status === 401) {
         thisEmployeeForm.state.showAlert(
