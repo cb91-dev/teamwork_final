@@ -16239,6 +16239,10 @@ body {
       overscroll-behavior: none;
 }
 
+.fa-backspace {
+  color: #dd0404;
+}
+
 #calendar {
   background-color: white;
 }
@@ -16359,7 +16363,7 @@ input {
 }
 
 .fa-backspace {
-  color: #ebebeb;
+  color: #dd0404;
 }
 
 .fa-check {

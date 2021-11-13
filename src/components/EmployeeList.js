@@ -98,6 +98,9 @@ export default function EmployeeList(props) {
             />
           </section>
           <footer className="modal-card-foot">
+            <button form="update_employee_admin" className="button is-link">
+              Save changes
+            </button>
             <button onClick={closer} className="button is-danger">
               Close
             </button>

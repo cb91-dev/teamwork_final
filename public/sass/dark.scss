@@ -21,7 +21,10 @@
   font-style: italic;
   margin-bottom: 1em;
 }
-
+#calendar {
+  max-width: 560px;
+  margin: 0 auto;
+}
 #loader {
   position: fixed;
   height: 100%;
@@ -173,6 +176,15 @@ a.navbar-item.is-active,
 .highlight {
   color: $link;
 }
+@media screen and (min-width: 800px) {
+  #menu1-btn,
+  #menu2-btn,
+  #menu3-btn,
+  #menu4-btn,
+  #menu5-btn {
+    color: white;
+  }
+}
 
 .navbar {
   background-image: $back-ground-lg;
@@ -181,6 +193,13 @@ a.navbar-item.is-active,
 @media only screen and (max-width: 1016px) {
   .navbar {
     background-image: $back-ground-lg;
+  }
+  #menu1-btn,
+  #menu2-btn,
+  #menu3-btn,
+  #menu4-btn,
+  #menu5-btn {
+    color: #414141;
   }
 
   .navbar-item,

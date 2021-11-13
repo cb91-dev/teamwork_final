@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import { render } from "preact";
+import React, { useState } from "react";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 
@@ -22,13 +23,17 @@ export default function ScheduleMakerForm(props) {
   function sendRenderData(res) {
     props.parentCallBackSendRenderData(res);
   }
-
   const handleReset = () => {
     Array.from(document.querySelectorAll(".scheduleInputs")).forEach(
       (input) => (input.value = "")
     );
     setscheduleData([]);
   };
+  // // // Local host/local development
+  const url = "http://localhost:8888/api/api.php";
+
+  // // Hosting URL
+  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
   function createNewShift(evt) {
     const newShift = {
@@ -38,27 +43,26 @@ export default function ScheduleMakerForm(props) {
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
     sendRenderData(newShift);
-    var url = "http://localhost:8888/api/api.php?action=addSchedule";
-    fetch(url, {
+    fetch(url + "?action=addSchedule", {
       method: "POST",
       body: JSON.stringify(newShift),
       credentials: "include",
-    }).then(function (headers) {
-      if (headers.status === 201) {
-        console.log("it worked from this end");
+    }).then(function (response) {
+      if (response.status === 201) {
         props.showAlert("success", "Shift added");
         props.closer();
+        sendRenderData(response);
         handleReset();
       }
-      if (headers.status === 401) {
+      if (response.status === 401) {
         props.showAlert("error", "This action didn't work");
         props.closer();
       }
-      if (headers.status === 429) {
+      if (response.status === 429) {
         props.showAlert("error", "This action didn't work");
         props.closer();
       }
-      if (headers.status === 500) {
+      if (response.status === 500) {
         props.showAlert("error", "This action didn't work");
         props.closer();
       }

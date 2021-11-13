@@ -1,39 +1,23 @@
-// if ("serviceWorker" in navigator) {
-//   window.addEventListener("load", function () {
-//     navigator.serviceWorker.register("sw.js").then(
-//       function (registration) {
-//         // Registration was successful
-//         console.log(
-//           "ServiceWorker registration successful with scope: ",
-//           registration.scope
-//         );
-//       },
-//       function (err) {
-//         // registration failed :(
-//         console.log("ServiceWorker registration failed: ", err);
-//       }
-//     );
-//   });
-// }
-// var CACHE_NAME = "my-site-cache-v1";
+// var CACHE_NAME = "teamWork_cache";
 // var urlsToCache = [
 //   "/",
-//   "index.html",
-//   "logo-img/logo.svg",
-//   "css/dark.css",
-//   "css/light.css",
-//   "css/error.css",
-//   "css/mystyle.css",
-//   "sw.js",
-//   "js/main.js",
-//   "manifest.json",
+//   "/index.html",
+//   "/logo-img/logo.svg",
+//   "/css/dark.css",
+//   "/css/light.css",
+//   "/css/error.css",
+//   "/css/mystyle.css",
+//   "/sw.js",
+//   "/main.js",
+//   "/manifest.json",
 // ];
 
 // self.addEventListener("install", function (event) {
 //   // Perform install steps
+//   // console.log('test');
 //   event.waitUntil(
 //     caches.open(CACHE_NAME).then(function (cache) {
-//       console.log("Opened cache");
+//       // console.log('Opened cache');
 //       return cache.addAll(urlsToCache);
 //     })
 //   );
@@ -42,13 +26,20 @@
 // self.addEventListener("fetch", function (event) {
 //   event.respondWith(
 //     caches.match(event.request).then(function (response) {
+//       // console.log(event.request.url)
+//       // console.log(event.request);
+//       // console.log(response);
 //       // Cache hit - return response
 //       if (response) {
 //         return response;
 //       }
+//       // console.log("not returned");
 
 //       return fetch(event.request).then(function (response) {
 //         // Check if we received a valid response
+//         if (event.request.method != "GET") return response;
+//         if (/api\//g.test(event.request.url)) return response; // dont cache if its an api request, dont cache if it is a post request.
+
 //         if (!response || response.status !== 200 || response.type !== "basic") {
 //           return response;
 //         }
@@ -58,10 +49,14 @@
 //         // as well as the cache consuming the response, we need
 //         // to clone it so we have two streams.
 //         var responseToCache = response.clone();
+//         // console.log("response cloned");
 
 //         caches.open(CACHE_NAME).then(function (cache) {
 //           cache.put(event.request, responseToCache);
+//           // console.log("adding to cache");
 //         });
+
+//         // console.log("working???");
 
 //         return response;
 //       });

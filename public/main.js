@@ -1,14 +1,111 @@
 /// Url's
 
-// Local host/local development
+// // Local host/local development
 const url = "http://localhost:8888/api/api.php";
 
 // // Hosting URL
-// const url = "https://bennettdesigns.dev/teamWork/api/api.php";
+// const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+
+//----------------- LOGIN FETCH-------------------------
+
+function test(evt) {
+  evt.preventDefault();
+  console.log(2);
+  console.log(evt);
+}
+
+function login(evt) {
+  evt.preventDefault();
+  console.log(1);
+  document.getElementById("loader").classList.remove("hidden");
+  var loginData = new FormData();
+  loginData.append(evt.target[0].name, evt.target[0].value);
+  loginData.append(evt.target[1].name, evt.target[1].value);
+  fetch(url + "?action=login", {
+    method: "POST",
+    body: loginData,
+    credentials: "include",
+  }).then(function (res) {
+    if (res.status === 202) {
+      hideAlert();
+      setTimeout(function () {
+        viewMyDetails();
+      }, 2100);
+      setTimeout(function () {
+        viewMyAvail();
+      }, 4100);
+      setTimeout(function () {
+        viewMySchedule();
+      }, 5100);
+      clearRegister("login_form");
+      document.getElementById("TeamWork_APP_login").classList.add("hidden");
+      showAlert("success", "You have logged in");
+      document.getElementById("loader").classList.add("hidden");
+      document
+        .getElementById("TeamWork_APP_logged_in")
+        .classList.remove("hidden");
+    }
+    if (res.status === 307) {
+      hideAlert();
+      setTimeout(function () {
+        viewMyDetails();
+      }, 2100);
+      setTimeout(function () {
+        viewMyAvail();
+      }, 4100);
+      setTimeout(function () {
+        viewMySchedule();
+      }, 5100);
+      document.getElementById("TeamWork_APP_login").classList.add("hidden");
+      showAlert("success", "You have logged in");
+      document.getElementById("loader").classList.add("hidden");
+      document
+        .getElementById("TeamWork_APP_logged_in")
+        .classList.remove("hidden");
+      localStorage.setItem("Admin", "ok");
+    }
+    if (res.status === 401) {
+      showLoginAlert(
+        "error",
+        "Somthing has gone wrong, please make sure you have enter the correct details"
+      );
+      document.getElementById("loader").classList.add("hidden");
+    }
+    if (res.status === 501) {
+      showLoginAlert("error", "Mmmm somthing has gone wrong");
+      document.getElementById("loader").classList.add("hidden");
+    }
+    if (res.status === 429) {
+      showLoginAlert("error", "OK........ stop pushing the submit button");
+      document.getElementById("loader").classList.add("hidden");
+    }
+  });
+}
+function myServiceGuy() {
+  navigator.serviceWorker.register("sw.js").then(
+    function (registration) {
+      // Registration was successful
+      console.log(
+        "ServiceWorker registration successful with scope: ",
+        registration.scope
+      );
+    },
+    function (err) {
+      // registration failed :(
+      console.log("ServiceWorker registration failed: ", err);
+    }
+  );
+}
 
 setTimeout(function () {
+  viewMyDetails();
+}, 2100);
+setTimeout(function () {
   viewMyAvail();
-}, 2600);
+}, 4100);
+setTimeout(function () {
+  viewMySchedule();
+}, 5100);
 
 if (localStorage.getItem("Logged_In_Status", "True")) {
   document.getElementById("TeamWork_APP_login").classList.add("hidden");
@@ -31,38 +128,14 @@ function onloadtheme() {
 }
 function setStyleSheet(url) {
   hideAlert();
-  // document.getElementById("loader-theme").classList.remove("hidden");
   stylesheet.setAttribute("href", url);
   // // window.addEventListener('DOMContentloaded',)
   document.getElementById("loader-theme").classList.add("hidden");
   localStorage.setItem("DarkModeStatus", url);
 }
 
-// // Initialize all input of date type.
-// const calendars = bulmaCalendar.attach('[type="date"]', options);
-
-// // Loop on each calendar initialized
-// calendars.forEach((calendar) => {
-//   // Add listener to select event
-//   calendar.on("select", (date) => {
-//     console.log(date);
-//   });
-// });
-
-// // To access to bulmaCalendar instance of an element
-// const element = document.querySelector("#my-element");
-// if (element) {
-//   // bulmaCalendar instance is available as element.bulmaCalendar
-//   element.bulmaCalendar.on("select", (datepicker) => {
-//     console.log(datepicker.data.value());
-//   });
-// }
-
 ///----------------------- CLOCK IN FETCH-----------------
-function hello() {
-  console.log(1);
-}
-// var url = "http://localhost:8888/api/api.php";
+
 function punchClock() {
   let formDate = new FormData();
   const num = document.getElementById("clockInNumber").value;
@@ -148,8 +221,10 @@ function clearNums() {
 }
 
 ///REGISTER Fetch
+function clearRegister(e) {
+  document.getElementById(e).reset();
+}
 function register(evt) {
-  // var url = "http://localhost:8888/api/api.php?action=register";
   hideAlert();
   // document.getElementById("loader").classList.remove("hidden");
   evt.preventDefault();
@@ -170,62 +245,115 @@ function register(evt) {
   }).then(function (headers) {
     document.getElementById("loader").classList.add("hidden");
     if (headers.status === 201) {
-      document.getElementById("TeamWork_APP_login").classList.add("hidden");
-      showAlert("success", "Welcome to the party");
+      document.getElementById("register_form").classList.add("hidden");
+      document.getElementById("login_box").classList.remove("hidden");
+      showLoginAlert("success", "Welcome to the party now login");
+      clearRegister("login_form");
       document
-        .getElementById("TeamWork_APP_logged_in")
-        .classList.remove("hidden");
+        .getElementById("menu5-btn")
+        .setAttribute("style", "display:none");
+      document.getElementById("menu5").setAttribute("style", "display:none");
+      clearRegister("register_form");
+    }
+    if (headers.status === 200) {
+      showLoginAlert("Error", "Try another email please");
+      document
+        .getElementById("menu5-btn")
+        .setAttribute("style", "display:none");
+      document.getElementById("menu5").setAttribute("style", "display:none");
     }
     if (headers.status === 401) {
-      showAlert(
+      showLoginAlert(
         "warning",
         "Please ensure you have all fields correctly filled out"
       );
     }
     if (headers.status === 501) {
-      showAlert("error", "Mmmm somthing has gone wrong");
+      showLoginAlert("error", "Mmmm somthing has gone wrong");
     }
     if (headers.status === 429) {
-      showAlert("error", "OK........ stop pushing the submit button");
+      showLoginAlert("error", "OK........ stop pushing the submit button");
     }
-
-    headers.text().then(function (body) {
-      // document.getElementById('insert_box_msg').innerHTML = body;
-    });
   });
 }
 
-/// Create Schedule Fetch
-
-/// UPDATE FETCH
-function postUpdate(evt) {
-  evt.preventDefault();
-  var postFormData = new FormData();
-  postFormData.append(evt.target[0].name, evt.target[0].value);
-  postFormData.append(evt.target[1].name, evt.target[1].value);
-  postFormData.append(evt.target[2].name, evt.target[2].value);
-  postFormData.append(evt.target[3].name, evt.target[3].value);
-  postFormData.append(evt.target[4].name, evt.target[4].value);
-  postFormData.append(evt.target[5].name, evt.target[5].value);
-  postFormData.append(evt.target[6].name, evt.target[6].value);
-  postFormData.append(evt.target[7].name, evt.target[7].value);
-  fetch(evt.target.action, {
+/// My Schedule FETCH
+function viewMySchedule() {
+  fetch(url + "?action=viewMySchedule", {
     method: "POST",
-    body: postFormData,
     credentials: "include",
-  }).then(function (headers) {
-    if (headers.status === 202) {
+  }).then(function (response) {
+    if (response.status === 202) {
+      response.json().then((response) => {
+        formattedSchedule(response);
+      });
+    } else {
+      showAlert("warning", "nope");
     }
-    headers.text().then(function (body) {
-      document.getElementById("output").innerHTML = body;
-    });
   });
+}
+
+function formattedSchedule(res) {
+  for (let i = 0; i < res.length; i++) {
+    const formattedSchedule = {
+      employees_idNumber: res[i].employees_idNumber,
+      department: res[i].Department,
+      starTime: res[i].startDate_Time,
+      finishTime: res[i].finishDate_Time,
+      shiftMsg: res[i].ShiftMsg,
+      shiftid: res[i].schedule_id,
+    };
+
+    renderScheduleList(formattedSchedule);
+  }
+}
+
+function renderScheduleList(res) {
+  var date = res.starTime;
+  var readable_date = new Date(date).toDateString();
+
+  // Save the current contents of #ShiftList
+  let inner = document.getElementById("shiftList").innerHTML;
+  // Add to contents
+  inner =
+    inner +
+    `
+<a class="panel-block is-active is-flex is-justify-content-space-between" onclick="OpenShiftView(event, '${res.shiftid}')">
+${readable_date}<i class="fas fa-chevron-down"></i>
+</a>
+<article class="message p-2 is-info shiftViewer hidden" id=${res.shiftid}>
+
+  Department:
+  ${res.department}<br>
+  Start Time:
+  ${res.starTime}<br>
+  Finish Time:
+  ${res.finishTime}<br>
+  Shift Team Message:
+  ${res.shiftMsg}<br>
+
+  <div class="is-flex is-justify-content-center">
+  <button class="delete shiftCloser" aria-label="delete" onclick="CloseShiftView(event)"></button>
+</div>
+</article>`;
+  // Insert back into DOM
+  document.getElementById("shiftList").innerHTML = inner;
+}
+function OpenShiftView(evt, shiftID) {
+  let a = document.getElementById(shiftID); //evt.target;
+  console.log(a);
+  a.classList.remove("hidden");
+}
+function CloseShiftView(evt) {
+  let a = evt.target.parentNode.parentNode;
+  console.log(a);
+  a.classList.add("hidden");
 }
 
 //-------ONLOAD HIDE MAIN APP FACE---
 function hide_main_app() {
   ////------ONLOAD ISLOGGED IN
-  // var url = "http://localhost:8888/api/api.php";
+
   fetch(url + "?action=isLoggedin", { credentials: "include" }).then(function (
     headers
   ) {
@@ -237,9 +365,16 @@ function hide_main_app() {
         .classList.remove("hidden");
       localStorage.setItem("Logged_In_Status", "True");
     }
+    if (headers.status === 307) {
+      document.getElementById("TeamWork_APP_login").classList.add("hidden");
+      showAlert("success", "Welcome Back");
+      document
+        .getElementById("TeamWork_APP_logged_in")
+        .classList.remove("hidden");
+      localStorage.setItem("Admin", "ok");
+    }
     if (headers.status === 401) {
       document.getElementById("TeamWork_APP_login").classList.remove("hidden");
-      showAlert("warning", "Please log in");
       document.getElementById("TeamWork_APP_logged_in").classList.add("hidden");
       localStorage.setItem("Logged_In_Status", "False");
     }
@@ -251,72 +386,18 @@ function hide_main_app() {
     }
   });
 }
-//----------------- LOGIN FETCH-------------------------
-
-function login(event) {
-  hideAlert();
-  // document.getElementById("loader").classList.remove("hidden");
-  setTimeout(function () {
-    viewMyDetails();
-  }, 2100);
-  setTimeout(function () {
-    viewMyAvail();
-  }, 4100);
-  event.preventDefault();
-  var postFormData = new FormData();
-  postFormData.append(event.target[0].name, event.target[0].value);
-  postFormData.append(event.target[1].name, event.target[1].value);
-  fetch(url + "?action=login", {
-    method: "POST",
-    body: postFormData,
-    credentials: "include",
-  }).then(function (headers) {
-    document.getElementById("loader").classList.add("hidden");
-    if (headers.status === 202) {
-      // localStorage.setItem('Logged_In_Status', 'True');
-      document.getElementById("TeamWork_APP_login").classList.add("hidden");
-      showAlert("success", "You have logged in");
-      document
-        .getElementById("TeamWork_APP_logged_in")
-        .classList.remove("hidden");
-      document
-        .getElementById("menu5-btn")
-        .setAttribute("style", "display:none");
-      document.getElementById("menu5").setAttribute("style", "display:none");
-    }
-    if (headers.status === 307) {
-      // localStorage.setItem('Logged_In_Status', 'True');
-      document.getElementById("TeamWork_APP_login").classList.add("hidden");
-      showAlert("success", "You have logged in");
-      document
-        .getElementById("TeamWork_APP_logged_in")
-        .classList.remove("hidden");
-    }
-    if (headers.status === 401) {
-      // localStorage.setItem('Logged_In_Status', 'False');
-      showAlert("warning", "Mmmm somthing has gone wrong");
-    }
-    if (headers.status === 501) {
-      showAlert("error", "Mmmm somthing has gone wrong");
-    }
-    if (headers.status === 429) {
-      showAlert("error", "OK........ stop pushing the submit button");
-    }
-    // headers.text().then(function (body) {
-    //     document.getElementById('insert_box_msg').innerHTML = body;
-    // })
-  });
-}
 
 //--------------------- LOGOUT FETCH--------------------
 
-function logOut() {
-  // var url = "http://localhost:8888/api/api.php";
+function logOut(evt) {
+  document.getElementById("navHambuger").classList.toggle("is-active");
+  document.getElementById("navbarBasicExample").classList.toggle("is-active");
+  evt.preventDefault();
   fetch(url + "?action=logout", {
-    method: "GET",
     credentials: "include",
   }).then(function (headers) {
     if (headers.status === 202) {
+      localStorage.setItem("Admin", "no");
       document.getElementById("TeamWork_APP_login").classList.remove("hidden");
       showAlert("success", "You have logged out");
       document.getElementById("TeamWork_APP_logged_in").classList.add("hidden");
@@ -325,12 +406,34 @@ function logOut() {
     if (headers.status === 500) {
       showAlert("warning", "Mmmm somthing has gone wrong");
     }
-    // headers.text().then(function (body) {
-    //     document.getElementById('insert_box_msg').innerHTML = body;
-    // })
   });
 }
-
+// / login Errors box
+function showLoginAlert(msgtype, msg) {
+  console.log(msgtype, msg);
+  document.getElementById("alertLogin").removeAttribute("hidden");
+  document.getElementById("alertMsgLogin").innerHTML = msg;
+  window.setTimeout(function () {
+    hideLoginAlert();
+  }, 10000);
+  if (msgtype === "success") {
+    document.getElementById("alertLogin").style.backgroundColor =
+      "rgb(41, 109, 219)";
+    document.getElementById("alertLogin").style.color = "rgb(255, 255, 255)";
+  }
+  if (msgtype === "warning") {
+    document.getElementById("alertLogin").style.backgroundColor =
+      "rgb(255, 221, 87)";
+  }
+  if (msgtype === "error") {
+    document.getElementById("alertLogin").style.backgroundColor =
+      "rgb(255, 56, 96)";
+    document.getElementById("alertLogin").style.color = "rgb(255, 255, 255)";
+  }
+}
+function hideLoginAlert() {
+  document.getElementById("alertLogin").setAttribute("hidden", "hidden");
+}
 ///--------------------------------ERRORS BOXS---------------------
 function showAlert(msgtype, msg) {
   document.getElementById("alertbox").removeAttribute("hidden");
@@ -355,6 +458,7 @@ function showAlert(msgtype, msg) {
 }
 function hideAlert() {
   document.getElementById("alertbox").setAttribute("hidden", "hidden");
+  document.getElementById("alertLogin").setAttribute("hidden", "hidden");
 }
 
 //----------------------------LOGIN REGISTER-------------------------
@@ -370,10 +474,10 @@ function back_to_login_btn() {
   document.getElementById("register_form").classList.add("hidden");
   document.getElementById("login_box").classList.remove("hidden");
 }
+
 // //--------- View My Details------------
 function viewMyDetails() {
   hideAlert();
-  // var url = "http://localhost:8888/api/api.php";
   document.getElementById("loader").classList.remove("hidden");
   fetch(url + "?action=viewMyDetails", { credentials: "include" }).then(
     function (response) {
@@ -412,9 +516,8 @@ function viewMyDetails() {
 
 ///--------------View MY DETAILS for updating-------
 function updateMyDetailsViewForm() {
-  // var url = "http://localhost:8888/api/api.php";
   hideAlert();
-  // document.getElementById("loader").classList.remove("hidden");
+  document.getElementById("loader").classList.remove("hidden");
   fetch(url + "?action=viewMyDetails", { credentials: "include" }).then(
     function (response) {
       if (response.status === 202) {
@@ -432,38 +535,29 @@ function updateMyDetailsViewForm() {
           showAlert("success", "good");
         });
         if (response.status === 400) {
-          showAlert("error", "Whoops");
+          showAlert("error", "Error loading those results");
+          document.getElementById("loader").classList.add("hidden");
+        }
+        if (response.status === 401) {
+          showAlert("error", "Error loading those results");
           document.getElementById("loader").classList.add("hidden");
         }
         if (response.status === 429) {
-          showAlert("error", "Whoops");
+          showAlert("error", "Error loading those results");
           document.getElementById("loader").classList.add("hidden");
         }
         if (response.status === 500) {
-          showAlert("error", "Whoops");
+          showAlert("error", "Error loading those results");
           document.getElementById("loader").classList.add("hidden");
         }
       }
     }
   );
 }
-// ----- Toggle password view
-function viewMyPassword() {
-  var x = document.getElementById("updateMyPword");
-  if (x.type === "password") {
-    x.type = "text";
-    document.getElementById("eyeOpen").classList.remove("hidden");
-    document.getElementById("eyeClosed").classList.add("hidden");
-  } else {
-    x.type = "password";
-    document.getElementById("eyeOpen").classList.add("hidden");
-    document.getElementById("eyeClosed").classList.remove("hidden");
-  }
-}
 // -------------Action to Up Date My Details-------------------------------///
 function upDateMyDetails(event) {
   hideAlert();
-  // document.getElementById("loader").classList.remove("hidden");
+  document.getElementById("loader").classList.remove("hidden");
   event.preventDefault(event);
   var postFormData = new FormData();
   postFormData.append(event.target[0].name, event.target[0].value);
@@ -488,12 +582,15 @@ function upDateMyDetails(event) {
         "warning",
         "Your details never updated, make sure you have changed details to update them"
       );
+      document.getElementById("loader").classList.add("hidden");
     }
     if (headers.status === 500) {
       showAlert("error", "What ever your doing is not cool");
+      document.getElementById("loader").classList.add("hidden");
     }
     if (headers.status === 429) {
       showAlert("error", "That is not cool Stop");
+      document.getElementById("loader").classList.add("hidden");
     }
   });
 }
@@ -934,6 +1031,8 @@ document.addEventListener("DOMContentLoaded", () => {
 //// MENU TARGETS
 
 function toggleVisibility(e) {
+  document.getElementById("navHambuger").classList.toggle("is-active");
+  document.getElementById("navbarBasicExample").classList.toggle("is-active");
   if (localStorage.getItem("page")) {
     var prevMenu = localStorage.getItem("page") + "-btn";
   }

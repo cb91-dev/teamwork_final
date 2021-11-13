@@ -1,44 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import junk from "./junk";
 
-export default class ScheduleMaker extends React.Component {
-  sendingDateDataToForm = (res) => {
-    this.props.dateClicked(res.dateStr);
+export default function ScheduleMakerCalendar(props) {
+  const [eventData, setEventData] = useState([]);
+
+  const sendingDateDataToForm = (evt) => {
+    props.dateClicked(evt);
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      isLoaded: false,
-      user: props.employees_idNumber,
-      renderData: props.renderData,
-    };
-  }
-  calendarRef = React.createRef(null);
 
-  onShiftAdded() {
-    let a = this.props.renderData;
-    console.log(a);
-    let calendarApi = this.calendarRef.current.getApi();
-    calendarApi.addEvent(a);
-  }
+  // // // Local host/local development
+  const url = "http://localhost:8888/api/api.php";
 
-  render() {
-    return (
-      <div className="panel has-background-white">
-        <button onClick={this.onShiftAdded}></button>
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          // dateClick={this.handleDateClick}
-          ref={this.calendarRef}
-          select={this.handleDateSelect}
-          dateClick={this.sendingDateDataToForm}
-          initialView="dayGridMonth"
-        />
-      </div>
-    );
-  }
+  // // Hosting URL
+  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  useEffect(() => {
+    fetch(url + "?action=viewFullSchedule", { credentials: "include" })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((res) => {
+        let formattedDate = res.map((entry) => ({
+          title: entry.Department,
+          start: entry.startDate_Time,
+          end: entry.finishDate_Time,
+        }));
+        setEventData(formattedDate);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+  return (
+    <div>
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        // dateClick={this.handleDateClick}
+        // ref={calendarRef}
+        events={eventData}
+        dateClick={sendingDateDataToForm}
+        initialView="dayGridMonth"
+      />
+    </div>
+  );
 }

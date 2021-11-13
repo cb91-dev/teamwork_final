@@ -24,6 +24,11 @@
   margin-bottom: 1em;
 }
 
+#calendar {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
 #loader {
   position: fixed;
   height: 100%;
@@ -4883,6 +4888,15 @@ a.navbar-item.is-active,
   color: #785ceb;
 }
 
+@media screen and (min-width: 800px) {
+  #menu1-btn,
+#menu2-btn,
+#menu3-btn,
+#menu4-btn,
+#menu5-btn {
+    color: white;
+  }
+}
 .navbar {
   background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
 }
@@ -4890,6 +4904,14 @@ a.navbar-item.is-active,
 @media only screen and (max-width: 1016px) {
   .navbar {
     background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+  }
+
+  #menu1-btn,
+#menu2-btn,
+#menu3-btn,
+#menu4-btn,
+#menu5-btn {
+    color: #414141;
   }
 
   .navbar-item,

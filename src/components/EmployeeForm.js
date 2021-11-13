@@ -103,29 +103,36 @@ class EmployeeForm extends React.Component {
       DOB: this.state.dateOfBirth,
       email: this.state.email,
     };
+    // // // Local host/local development
+    const url = "http://localhost:8888/api/api.php";
+
+    // // Hosting URL
+    // const url = "https://bennettdesigns.dev/teamWork/api/api.php";
     evt.preventDefault(evt);
-    var url = "http://localhost:8888/api/api.php?action=upDateEmployee";
-    fetch(url, {
+    evt.stopPropagation();
+    evt.nativeEvent.stopImmediatePropagation();
+    fetch(url + "?action=upDateEmployee", {
       method: "POST",
       body: JSON.stringify(updatedEmployeeData),
       credentials: "include",
-    }).then(function (headers) {
-      if (headers.status === 201) {
+    }).then(function (response) {
+      if (response.status === 201) {
         thisEmployeeForm.state.showAlert("success", "Employee profile updated");
         thisEmployeeForm.state.closer();
+        // thisEmployeeForm.state.newResults()
       }
-      if (headers.status === 401) {
+      if (response.status === 401) {
         thisEmployeeForm.state.showAlert(
           "error",
           "Employee profile did not updated"
         );
         thisEmployeeForm.state.closer();
       }
-      if (headers.status === 429) {
+      if (response.status === 429) {
         thisEmployeeForm.state.showAlert("error", "This action didn't work");
         thisEmployeeForm.state.closer();
       }
-      if (headers.status === 500) {
+      if (response.status === 500) {
         thisEmployeeForm.state.showAlert("error", "This action didn't work");
         thisEmployeeForm.state.closer();
       }
@@ -133,11 +140,14 @@ class EmployeeForm extends React.Component {
   }
 
   render() {
-    // console.log(this.props.employees_idNumber);
     return (
       <div>
         <section className="modal-card-body">
-          <form>
+          <form
+            id="update_employee_admin"
+            onSubmit={this.updateMyDetailsViewForm}
+            method="POST"
+          >
             <div className="field">
               <label className="label">Employee Id</label>
               <div className="control has-icons-left has-icons-right">
@@ -300,12 +310,6 @@ class EmployeeForm extends React.Component {
                 </div>
               </div>
             </div>
-            <button
-              onClick={this.updateMyDetailsViewForm}
-              className="button is-link"
-            >
-              Save changes
-            </button>
           </form>
         </section>
       </div>

@@ -57,14 +57,19 @@ export default function EmployeeForm(props) {
       is_manager: event.target.value,
     });
   };
+  // // // Local host/local development
+  const url = "http://localhost:8888/api/api.php";
+
+  // // Hosting URL
+  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
   function createNewEmployee(evt) {
     const newEmployeeData = {
       userInput,
     };
     evt.preventDefault();
-    var url = "http://localhost:8888/api/api.php?action=addNewEmployee";
-    fetch(url, {
+
+    fetch(url + "?action=addNewEmployee", {
       method: "POST",
       body: JSON.stringify(newEmployeeData),
       credentials: "include",
@@ -73,6 +78,7 @@ export default function EmployeeForm(props) {
         console.log("it worked from this end");
         props.showAlert("success", "Employee added");
         props.closer();
+        localStorage.setItem("Admin", "ok");
       }
       if (headers.status === 401) {
         props.showAlert("error", "This action didn't work");

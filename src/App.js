@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Employee from "./components/Employee";
 import ScheduleMaker from "./components/ScheduleMaker";
 
-export default function App(props) {
+export default function App() {
   const [userData, setEmployeeData] = useState({});
   function parentCallBacksendUsersData(userData) {
     setEmployeeData(userData);

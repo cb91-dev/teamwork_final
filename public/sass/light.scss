@@ -58,7 +58,7 @@ $link: #281a57;
 $danger: #949494;
 $back-ground-main: #fcfcfc;
 $back-ground-lg: linear-gradient(315deg, #c4c1c1 0%, #bdbbbb 74%);
-$backspace: #ebebeb;
+$backspace: #dd0404;
 
 body {
   overflow: hidden;
@@ -69,6 +69,9 @@ body {
   font-family: "Arvo";
   background-color: $back-ground-lg;
   overscroll-behavior: none;
+}
+.fa-backspace {
+  color: $backspace;
 }
 #calendar {
   background-color: white;

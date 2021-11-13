@@ -9,6 +9,10 @@
   background-color: #222121;
 }
 
+.help {
+  cursor: pointer;
+}
+
 .loader,
 .loader:before,
 .loader:after {

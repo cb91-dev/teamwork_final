@@ -5,7 +5,6 @@ import ScheduleMakerCalendar from "./ScheduleMakerCalendar";
 export default function ScheduleMaker(props) {
   const [modalShow, setModalShow] = useState(false);
   const [dateClicked, setDateClicked] = useState([]);
-  const [info, setInfo] = useState([]);
   const [renderData, setRenderData] = useState([]);
 
   function parentCallBackSendRenderData(renderData) {
@@ -24,7 +23,6 @@ export default function ScheduleMaker(props) {
   }
   const createNewShift = (scheduleData) => {
     setInfo(scheduleData);
-    console.log(scheduleData);
   };
 
   return (
@@ -37,6 +35,7 @@ export default function ScheduleMaker(props) {
           <ScheduleMakerCalendar
             renderData={renderData}
             dateClicked={parentCallBackdateClicked}
+            showAlert={props.showAlert}
           />
         </div>
       </article>

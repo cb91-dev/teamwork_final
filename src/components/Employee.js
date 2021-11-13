@@ -5,42 +5,39 @@ import EmployeeList from "./EmployeeList";
 
 export default function Employee(props) {
   const [dataEmployee, setDataEmployee] = useState([]);
-  const [loading, setloading] = useState(true);
-  const [error, seterror] = useState(null);
 
   function sendUsersData(res) {
     props.parentCallBacksendUsersData(res);
   }
 
-  useEffect(() => {
-    function viewListOfEmployees() {
-      var url = "http://localhost:8888/api/api.php?action=viewAllEmployees";
-      fetch(url, { credentials: "include" })
-        .then((response) => {
-          if (response.ok) {
-            props.showAlert("success", "Here is a list of current employees");
-            return response.json();
-          }
-        })
-        .then((res) => {
-          setDataEmployee(res);
-          sendUsersData(res);
-        })
-        .catch((error) => {
-          console.error("Error fetching data: ", error);
-          seterror(error);
-        })
-        .finally(() => {
-          setloading(false);
-        });
-    }
-    viewListOfEmployees();
-  }, [setDataEmployee]);
+  // // // Local host/local development
+  const url = "http://localhost:8888/api/api.php";
 
-  const [hidden, setHidden] = useState(false);
-  const ToggleClass = () => {
-    setHidden(!hidden);
-  };
+  // // Hosting URL
+  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+
+  useEffect(() => {
+    setInterval(function () {
+      if (localStorage.getItem("Admin") === "ok") {
+        fetch(url + "?action=viewAllEmployees", { credentials: "include" })
+          .then((response) => {
+            if (response.ok) {
+              props.showAlert("success", "Here is a list of current employees");
+              return response.json();
+            }
+          })
+          .then((res) => {
+            setDataEmployee(res);
+            sendUsersData(res);
+          })
+          .catch((error) => {
+            console.error("Error fetching data: ", error);
+          });
+        localStorage.setItem("Admin", "no");
+      }
+    }, 3000);
+  });
+
   const [isActive, setActive] = useState(false);
 
   function opener() {
@@ -56,12 +53,6 @@ export default function Employee(props) {
         <p className="panel-heading has-background-link">Current Employees</p>
 
         <div className="panel-block is-flex is-flex-direction-column">
-          <p className="pb-2 control has-icons-left">
-            <input className="input is-link" type="text" placeholder="Search" />
-            <span className="icon is-left">
-              <i className="fas fa-search" aria-hidden="true"></i>
-            </span>
-          </p>
           <div onClick={opener} className="pt-1 button is-link p-2">
             New Employee add them here
           </div>
@@ -96,7 +87,11 @@ export default function Employee(props) {
             ></button>
           </header>
           <section className="modal-card-body">
-            <EmployeeFormNew showAlert={props.showAlert} closer={closer} />
+            <EmployeeFormNew
+              // newResults={newResults}
+              showAlert={props.showAlert}
+              closer={closer}
+            />
           </section>
           <footer className="modal-card-foot">
             <button onClick={closer} className="button is-danger">

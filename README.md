@@ -68,3 +68,46 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### `Other Dependencies` and location to find them in TeamWork
+
+Open console in root of project and run the following:
+
+### `BULMA`
+
+v0.9.3
+yarn add bulma
+
+     Bulma has been used throughout this project as it is a CSS framework
+
+### `Full Calendar`
+
+v5.10
+yarn add --save @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction
+
+    Full Calendar is only visible to those user assigned the additional role of manager. Full Calendar can be found in the admin link from menu, this plugin was used to give mananger a clear view of rostered on staff for each day.
+
+### `React-Datetime`
+
+v3.1.1
+yarn add react-datetime
+
+    This plugin is used when creating a shift and selecting the correct time for that shift to occur, this gives the admin a easy to use format that full calendar will take.
+
+### `Moment`
+
+v2.29.1
+yarn add --save moment react-moment
+yarn add --save moment-timezone
+
+    This plugin works in with the react-datetime and is a dependency to use date-time.
+
+It should be noted that if any CSS changes are needed a SASS complier will be needed in choosen code editor. The next items mentioned are extensions in VS Code.
+
+### `Live Server`
+
+v5.6.1
+
+### `Live Sass Compiler`
+
+v3.0.0
