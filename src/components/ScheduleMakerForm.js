@@ -29,9 +29,24 @@ export default function ScheduleMakerForm(props) {
     );
     setscheduleData([]);
   };
-
   // // Hosting URL
-  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  // Local host/local development
+  const url = "http://localhost:8888/api/api.php";
+
+  const showEmployeeAvial = (e) => {
+    setEmployeeId(e.target.value);
+    const employeeIdNUM = {
+      employeeId,
+    };
+    fetch(url + "?action=viewAvail", {
+      method: "POST",
+      body: JSON.stringify(employeeIdNUM),
+      credentials: "include",
+    }).then(function (response) {
+      console.log(response);
+    });
+  };
 
   function createNewShift(evt) {
     const newShift = {
@@ -98,7 +113,7 @@ export default function ScheduleMakerForm(props) {
           <label className="label">Employee</label>
           <div className="control">
             <div className="select is-link">
-              <select onChange={(e) => setEmployeeId(e.target.value)}>
+              <select onChange={showEmployeeAvial}>
                 <option disabled>Select Employee</option>
                 {users.map((user, index) => (
                   <option
@@ -113,7 +128,37 @@ export default function ScheduleMakerForm(props) {
             </div>
           </div>
         </div>
-
+        <div className="has-text-centered label">Staff Availabilities</div>
+        <div className="control pb-3 is-flex is-justify-content-space-between">
+          <label className="radio">
+            <input type="radio" name="foobar" id="mon" />
+            Mon
+          </label>
+          <label className="radio">
+            <input type="radio" name="foobar" id="tue" />
+            Tue
+          </label>
+          <label className="radio">
+            <input type="radio" name="foobar" id="wed" />
+            Wed
+          </label>
+          <label className="radio">
+            <input type="radio" name="foobar" id="thur" />
+            Thur
+          </label>
+          <label className="radio">
+            <input type="radio" name="foobar" id="fri" />
+            Fri
+          </label>
+          <label className="radio">
+            <input type="radio" name="foobar" id="sat" />
+            Sat
+          </label>
+          <label className="radio">
+            <input type="radio" name="foobar" id="sun" />
+            Sun
+          </label>
+        </div>
         <div className="field">
           <label className="label">Shift Message</label>
           <div className="control">

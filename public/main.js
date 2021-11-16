@@ -1,6 +1,7 @@
 // // Hosting URL
-const url = "https://bennettdesigns.dev/teamwork/api/api.php";
-
+// const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+// Local host/local development
+const url = "http://localhost:8888/api/api.php";
 //----------------- LOGIN FETCH-------------------------
 
 function login(evt) {
@@ -54,8 +55,8 @@ function login(evt) {
         .getElementById("TeamWork_APP_logged_in")
         .classList.remove("hidden");
       localStorage.setItem("Admin", "ok");
-      document.getElementsById("menu5").classList.remove("hidden");
-      document.getElementsById("menu5-btn").classList.remove("hidden");
+      document.getElementById("menu5").classList.remove("hidden");
+      document.getElementById("menu5-btn").classList.remove("hidden");
     }
     if (res.status === 401) {
       showLoginAlert(
@@ -74,21 +75,21 @@ function login(evt) {
     }
   });
 }
-function myServiceGuy() {
-  navigator.serviceWorker.register("sw.js").then(
-    function (registration) {
-      // Registration was successful
-      console.log(
-        "ServiceWorker registration successful with scope: ",
-        registration.scope
-      );
-    },
-    function (err) {
-      // registration failed :(
-      console.log("ServiceWorker registration failed: ", err);
-    }
-  );
-}
+// function myServiceGuy() {
+//   navigator.serviceWorker.register("sw.js").then(
+//     function (registration) {
+//       // Registration was successful
+//       console.log(
+//         "ServiceWorker registration successful with scope: ",
+//         registration.scope
+//       );
+//     },
+//     function (err) {
+//       // registration failed :(
+//       console.log("ServiceWorker registration failed: ", err);
+//     }
+//   );
+// }
 
 setTimeout(function () {
   viewMyDetails();

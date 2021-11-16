@@ -1,65 +1,65 @@
-var CACHE_NAME = "teamWork_cache";
-var urlsToCache = [
-  "/",
-  "/index.html",
-  "/logo-img/logo.svg",
-  "/css/dark.css",
-  "/css/light.css",
-  "/css/error.css",
-  "/css/mystyle.css",
-  "/sw.js",
-  "/main.js",
-  "/manifest.json",
-];
+// var CACHE_NAME = "teamWork_cache";
+// var urlsToCache = [
+//   "/",
+//   "/index.html",
+//   "/logo-img/logo.svg",
+//   "/css/dark.css",
+//   "/css/light.css",
+//   "/css/error.css",
+//   "/css/mystyle.css",
+//   "/sw.js",
+//   "/main.js",
+//   "/manifest.json",
+// ];
 
-self.addEventListener("install", function (event) {
-  // Perform install steps
-  // console.log('test');
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      // console.log('Opened cache');
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+// self.addEventListener("install", function (event) {
+//   // Perform install steps
+//   // console.log('test');
+//   event.waitUntil(
+//     caches.open(CACHE_NAME).then(function (cache) {
+//       // console.log('Opened cache');
+//       return cache.addAll(urlsToCache);
+//     })
+//   );
+// });
 
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      // console.log(event.request.url)
-      // console.log(event.request);
-      // console.log(response);
-      // Cache hit - return response
-      if (response) {
-        return response;
-      }
-      // console.log("not returned");
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     caches.match(event.request).then(function (response) {
+//       // console.log(event.request.url)
+//       // console.log(event.request);
+//       // console.log(response);
+//       // Cache hit - return response
+//       if (response) {
+//         return response;
+//       }
+//       // console.log("not returned");
 
-      return fetch(event.request).then(function (response) {
-        // Check if we received a valid response
-        if (event.request.method != "GET") return response;
-        if (/api\//g.test(event.request.url)) return response; // dont cache if its an api request, dont cache if it is a post request.
+//       return fetch(event.request).then(function (response) {
+//         // Check if we received a valid response
+//         if (event.request.method != "GET") return response;
+//         if (/api\//g.test(event.request.url)) return response; // dont cache if its an api request, dont cache if it is a post request.
 
-        if (!response || response.status !== 200 || response.type !== "basic") {
-          return response;
-        }
+//         if (!response || response.status !== 200 || response.type !== "basic") {
+//           return response;
+//         }
 
-        // IMPORTANT: Clone the response. A response is a stream
-        // and because we want the browser to consume the response
-        // as well as the cache consuming the response, we need
-        // to clone it so we have two streams.
-        var responseToCache = response.clone();
-        // console.log("response cloned");
+//         // IMPORTANT: Clone the response. A response is a stream
+//         // and because we want the browser to consume the response
+//         // as well as the cache consuming the response, we need
+//         // to clone it so we have two streams.
+//         var responseToCache = response.clone();
+//         // console.log("response cloned");
 
-        caches.open(CACHE_NAME).then(function (cache) {
-          cache.put(event.request, responseToCache);
-          // console.log("adding to cache");
-        });
+//         caches.open(CACHE_NAME).then(function (cache) {
+//           cache.put(event.request, responseToCache);
+//           console.log("adding to cache");
+//         });
 
-        // console.log("working???");
+//         // console.log("working???");
 
-        return response;
-      });
-    })
-  );
-});
+//         return response;
+//       });
+//     })
+//   );
+// });

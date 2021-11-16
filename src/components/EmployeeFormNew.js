@@ -59,8 +59,9 @@ export default function EmployeeForm(props) {
   };
 
   // // Hosting URL
-  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
-
+  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+  // Local host/local development
+  const url = "http://localhost:8888/api/api.php";
   function createNewEmployee(evt) {
     const newEmployeeData = {
       userInput,

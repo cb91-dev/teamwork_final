@@ -103,9 +103,10 @@ class EmployeeForm extends React.Component {
       DOB: this.state.dateOfBirth,
       email: this.state.email,
     };
-
+    // Local host/local development
+    const url = "http://localhost:8888/api/api.php";
     // // Hosting URL
-    const url = "https://bennettdesigns.dev/teamWork/api/api.php";
+    // const url = "https://bennettdesigns.dev/teamWork/api/api.php";
     evt.preventDefault(evt);
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
