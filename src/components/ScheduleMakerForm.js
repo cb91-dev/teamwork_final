@@ -36,11 +36,16 @@ export default function ScheduleMakerForm(props) {
 
   const employeeIdHandler = (e) => {
     setEmployeeId(e.target.value);
-    showEmployeeAvial();
+    showEmployeeAvial(e);
   };
-  const showEmployeeAvial = () => {
-    fetch(url + `?action=viewAvail&id=${employeeId}`, {
+  const showEmployeeAvial = (e) => {
+    const hello = {
+      Employee_id: e.target.value,
+    };
+    fetch(url + "?action=viewAvail", {
+      method: "POST",
       credentials: "include",
+      body: JSON.stringify(hello),
     }).then(function (response) {
       console.log(response);
     });
