@@ -34,14 +34,12 @@ export default function ScheduleMakerForm(props) {
   // Local host/local development
   const url = "http://localhost:8888/api/api.php";
 
-  const showEmployeeAvial = (e) => {
+  const employeeIdHandler = (e) => {
     setEmployeeId(e.target.value);
-    const employeeIdNUM = {
-      employeeId,
-    };
-    fetch(url + "?action=viewAvail", {
-      method: "POST",
-      body: JSON.stringify(employeeIdNUM),
+    showEmployeeAvial();
+  };
+  const showEmployeeAvial = () => {
+    fetch(url + `?action=viewAvail&id=${employeeId}`, {
       credentials: "include",
     }).then(function (response) {
       console.log(response);
@@ -113,7 +111,7 @@ export default function ScheduleMakerForm(props) {
           <label className="label">Employee</label>
           <div className="control">
             <div className="select is-link">
-              <select onChange={showEmployeeAvial}>
+              <select onChange={employeeIdHandler}>
                 <option disabled>Select Employee</option>
                 {users.map((user, index) => (
                   <option
@@ -130,32 +128,32 @@ export default function ScheduleMakerForm(props) {
         </div>
         <div className="has-text-centered label">Staff Availabilities</div>
         <div className="control pb-3 is-flex is-justify-content-space-between">
-          <label className="radio">
-            <input type="radio" name="foobar" id="mon" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="mon" />
             Mon
           </label>
-          <label className="radio">
-            <input type="radio" name="foobar" id="tue" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="tue" />
             Tue
           </label>
-          <label className="radio">
-            <input type="radio" name="foobar" id="wed" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="wed" />
             Wed
           </label>
-          <label className="radio">
-            <input type="radio" name="foobar" id="thur" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="thur" />
             Thur
           </label>
-          <label className="radio">
-            <input type="radio" name="foobar" id="fri" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="fri" />
             Fri
           </label>
-          <label className="radio">
-            <input type="radio" name="foobar" id="sat" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="sat" />
             Sat
           </label>
-          <label className="radio">
-            <input type="radio" name="foobar" id="sun" />
+          <label className="checkbox">
+            <input type="checkbox" name="foobar" id="sun" />
             Sun
           </label>
         </div>
