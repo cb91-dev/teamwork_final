@@ -30,9 +30,7 @@ export default function ScheduleMakerForm(props) {
     setscheduleData([]);
   };
   // // Hosting URL
-  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
-  // Local host/local development
-  const url = "http://localhost:8888/api/api.php";
+  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
   const employeeIdHandler = (e) => {
     setEmployeeId(e.target.value);

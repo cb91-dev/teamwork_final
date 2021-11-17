@@ -19,9 +19,7 @@ export default function EmployeeList(props) {
       Employee_id: props.id,
     };
     // // Hosting URL
-    // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
-    // Local host/local development
-    const url = "http://localhost:8888/api/api.php";
+    const url = "https://bennettdesigns.dev/teamwork/api/api.php";
 
     fetch(url + "?action=deleteEmployee", {
       method: "POST",

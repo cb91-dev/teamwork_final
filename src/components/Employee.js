@@ -11,9 +11,8 @@ export default function Employee(props) {
   }
 
   // // Hosting URL
-  // const url = "https://bennettdesigns.dev/teamwork/api/api.php";
-  // Local host/local development
-  const url = "http://localhost:8888/api/api.php";
+  const url = "https://bennettdesigns.dev/teamwork/api/api.php";
+
   useEffect(() => {
     setInterval(function () {
       if (localStorage.getItem("Admin") === "ok") {
