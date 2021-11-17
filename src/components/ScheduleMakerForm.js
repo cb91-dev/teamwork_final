@@ -38,18 +38,51 @@ export default function ScheduleMakerForm(props) {
     setEmployeeId(e.target.value);
     showEmployeeAvial(e);
   };
-  const showEmployeeAvial = (e) => {
+  function showEmployeeAvial(e) {
+    var id = e.target.value;
     const hello = {
-      Employee_id: e.target.value,
+      Employee_id: id,
     };
     fetch(url + "?action=viewAvail", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(hello),
-    }).then(function (response) {
-      console.log(response);
-    });
-  };
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data == false) {
+          if (data["Monday"] === "Yes") {
+            document.getElementById("mon").checked = true;
+          }
+          if (data["Tuesday"] === "Yes") {
+            document.getElementById("tue").checked = true;
+          }
+          if (data["Wednesday"] === "Yes") {
+            document.getElementById("wed").checked = true;
+          }
+          if (data["Thursday"] === "Yes") {
+            document.getElementById("thur").checked = true;
+          }
+          if (data["Friday"] === "Yes") {
+            document.getElementById("fri").checked = true;
+          }
+          if (data["Saturday"] === "Yes") {
+            document.getElementById("sat").checked = true;
+          }
+          if (data["Sunday"] === "Yes") {
+            document.getElementById("sun").checked = true;
+          }
+        } else {
+          document.getElementById("mon").checked = false;
+          document.getElementById("tue").checked = false;
+          document.getElementById("wed").checked = false;
+          document.getElementById("thur").checked = false;
+          document.getElementById("fri").checked = false;
+          document.getElementById("sat").checked = false;
+          document.getElementById("sun").checked = false;
+        }
+      });
+  }
 
   function createNewShift(evt) {
     const newShift = {
@@ -132,6 +165,9 @@ export default function ScheduleMakerForm(props) {
           </div>
         </div>
         <div className="has-text-centered label">Staff Availabilities</div>
+        <p className="has-text-centered pb-2">
+          Checked boxes means employee is available to work that day
+        </p>
         <div className="control pb-3 is-flex is-justify-content-space-between">
           <label className="checkbox">
             <input type="checkbox" name="foobar" id="mon" />

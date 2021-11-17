@@ -20,7 +20,7 @@ export default function ScheduleMakerCalendar(props) {
         viewFullSchedule();
         localStorage.setItem("Admin", "no");
       }
-    }, 1600);
+    }, 1800);
   });
   function viewFullSchedule() {
     fetch(url + "?action=viewFullSchedule", { credentials: "include" })

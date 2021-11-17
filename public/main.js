@@ -386,7 +386,7 @@ function logOut(evt) {
   }).then(function (headers) {
     if (headers.status === 202) {
       localStorage.setItem("Admin", "no");
-
+      document.getElementById("shiftList").innerHTML = " ";
       document.getElementById("TeamWork_APP_login").classList.remove("hidden");
       showAlert("success", "You have logged out");
       document.getElementById("TeamWork_APP_logged_in").classList.add("hidden");

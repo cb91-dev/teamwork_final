@@ -19,7 +19,7 @@ export default function Employee(props) {
       if (localStorage.getItem("Admin") === "ok") {
         callEmployee();
       }
-    }, 1400);
+    }, 1200);
   });
   function callEmployee() {
     fetch(url + "?action=viewAllEmployees", { credentials: "include" })

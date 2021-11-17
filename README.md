@@ -1,3 +1,9 @@
+## This is the frontend of TeamWork application, seek api files in repo to view.
+
+## TEAMWORK
+
+v1.0.1
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -69,12 +75,44 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
+## `Front End`
+
+HTML
+HTML5
+The HyperText Markup Language, or HTML is the standard markup language for documents designed to be displayed in a web browser. This technology was used throughout application to ensure it could be render by browsers.
+
+CSS
+v2.1
+Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML. This was used throughout project to styling it.
+
+SCSS
+v3.5.6
+Sassy Cascading Style Sheets is a special type of file for SASS, a program written in Ruby that assembles CSS style sheets for a browser, and for information, SASS adds lots of additional functionality to CSS like variables, nesting and more which can make writing CSS easier and faster.
+
+JAVASCRIPT
+ES2015
+JavaScript is a text-based programming language used both on the client-side and server-side that allows you to make web pages interactive and much more. A list below highlights some of the key parts or features of javascript that where used for in this project.
+
+        1.Create interaction for user, example is hiding or showing different part of application depending on login status.
+
+        2.The Fetch API provides an interface for fetching resources,including across the network and was used to interact with database.
+
+        3.JSX is a syntax extension to JavaScript and was used along with react to render elements to page.
+
 ### `Other Dependencies` and location to find them in TeamWork
 
 Open console in root of project and run the following:
 
+## `REACT`
+
+https://reactjs.org/
+v17.0.2
+yarn create react-app my-app
+React was used to implemented admin panel for this project
+
 ### `BULMA`
 
+https://bulma.io/
 v0.9.3
 yarn add bulma
 
@@ -82,6 +120,7 @@ yarn add bulma
 
 ### `Full Calendar`
 
+https://fullcalendar.io/
 v5.10.0
 yarn add --save @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction
 
@@ -89,6 +128,7 @@ yarn add --save @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interact
 
 ### `React-Datetime`
 
+https://www.npmjs.com/package/react-datetime
 v3.1.1
 yarn add react-datetime
 
@@ -96,6 +136,7 @@ yarn add react-datetime
 
 ### `Moment`
 
+https://www.npmjs.com/package/moment
 v2.29.1
 yarn add --save moment react-moment
 yarn add --save moment-timezone
@@ -106,8 +147,46 @@ It should be noted that if any CSS changes are needed a SASS complier will be ne
 
 ### `Live Server`
 
+        Live Server was used with VScode as it a dependency for live sass compiler
+
 v5.6.1
 
 ### `Live Sass Compiler`
 
+        Live Sass Compiler was used was VScode to enable the use of Scss in development.
+
 v3.0.0
+
+## `Webserver`
+
+### `Api`
+
+The api built for the application is using PHP,PDO,SQL.
+
+PHP
+https://www.php.net/
+v7.4.12
+
+    The features of this technology used in development of project consist classes and objects , these where used to create a connection class and a session class to be called upon throughout the web service.
+
+PDO
+https://www.php.net/
+v7.4.12
+
+    PDO refers to PHP data object which is a PHP extension that defines a lightweight and consistent interface for accessing a database in PHP. This feature of PHP was used in connection file while interacting with DB.
+
+SQL
+v5.7.32
+SQL is a domain-specific language used in programming and designed for managing data held in a relational database management system, or for stream processing in a relational data stream management system. This technology was used to create the database for this project, along with using SQL statements in PHP.
+
+## `Development Tools`
+
+## `Thunder Client`
+
+v1.9.1
+Thunder Client is a lightweight Rest API Client Extension for Visual Studio Code,this was used to test rest API.
+
+## `Chrome Dev Tools`
+
+https://developer.chrome.com/docs/devtools/
+Chrome dev tools was used throughout project to aid in troubleshooting and problem solving.
